@@ -1,32 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
-  const [movies, setMovies] = useState([
-    {
-      id: 1,
-      title: "Aliens",
-      image: "https://upload.wikimedia.org/wikipedia/en/f/fb/Aliens_poster.jpg",
-      director: "James Cameron",
-    },
-    {
-      id: 2,
-      title: "Spirited Away",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/d/db/Spirited_Away_Japanese_poster.png",
-      director: "Hayao Miyazaki",
-    },
-    {
-      id: 3,
-      title: "Whiplash",
-      image:
-        "https://upload.wikimedia.org/wikipedia/en/0/01/Whiplash_poster.jpg",
-      director: "Damien Chazelle",
-    },
-  ]);
+  const [movies, setMovies] = useState([]);
 
   const [selectedMovie, setSelectedMovie] = useState(null);
+
+  useEffect(() => {
+    fetch("https://myflixproject-9c1001b14e61.herokuapp.com/movies")
+      .then((response) => response.json())
+      .then((data) => {
+        const moviesFromApi= data.map((movie) => {
+          return {
+            Title: movie.title,
+            Year: movie.year,
+            Description: movie.description,
+            Genre: movie.genre,
+            Director: movie.director
+          };
+        });
+        setMovies(moviesFromApi);
+      })
+      //just in case
+      .catch((error)=>{
+        console.error('error importing data', error);
+      });
+  }, []);
+
   if (selectedMovie) {
     return (
       <MovieView
@@ -40,17 +41,19 @@ export const MainView = () => {
     return <div>The list is empty</div>;
   }
 
-  return (
+  return(
     <div>
-      {movies.map((movies) => (
+      {movies.map((movie)=>(
         <MovieCard
-          key={movies.id}
-          movieData={movies}
-          onMovieClick={() => {
-            setSelectedMovie(movies);
+          key={movie.id}
+          movieData={movie}
+          onMovieClick={()=>{
+            setSelectedMovie(movie);
           }}
         />
       ))}
     </div>
   );
 };
+
+//https://myflixproject-9c1001b14e61.herokuapp.com/
