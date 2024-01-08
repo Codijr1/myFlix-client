@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import PropTypes from 'prop-types';
 
 export const MainView = () => {
   const [movies, setMovies] = useState([]);
@@ -11,20 +12,19 @@ export const MainView = () => {
     fetch("https://myflixproject-9c1001b14e61.herokuapp.com/movies")
       .then((response) => response.json())
       .then((data) => {
-        const moviesFromApi= data.map((movie) => {
-          return {
-            Title: movie.title,
-            Year: movie.year,
-            Description: movie.description,
-            Genre: movie.genre,
-            Director: movie.director
-          };
-        });
+        const moviesFromApi = data.map((movie) => ({
+          Title: movie.title,
+          Year: movie.year,
+          Description: movie.description,
+          Genre: movie.genre,
+          Director: movie.director,
+          _id: movie._id.$oid,
+        }));
         setMovies(moviesFromApi);
       })
-      //just in case
-      .catch((error)=>{
-        console.error('error importing data', error);
+      // just in case
+      .catch((error) => {
+        console.error('Error importing data', error);
       });
   }, []);
 
@@ -45,7 +45,7 @@ export const MainView = () => {
     <div>
       {movies.map((movie)=>(
         <MovieCard
-          key={movie.id}
+          key={movie._id}
           movieData={movie}
           onMovieClick={()=>{
             setSelectedMovie(movie);
