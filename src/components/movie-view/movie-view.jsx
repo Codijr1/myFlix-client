@@ -18,7 +18,7 @@ export const MovieView = ({ movie, onBackClick }) => {
       </div>
       <div>
         <span>Genre:</span>
-        <span>{movie.Genre.join(", ")}</span>
+        <span>{Array.isArray(movie.Genre)? movie.Genre.join(", "):movie.Genre}</span>
       </div>
       <div>
         <span>Director:</span>
@@ -34,7 +34,11 @@ MovieView.propTypes = {
     Title: PropTypes.string.isRequired,
     Year: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
-    Genre: PropTypes.arrayOf(PropTypes.string).isRequired,
+    // Now allows either a string or an array
+    Genre: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]).isRequired,
     Director: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
   }).isRequired,

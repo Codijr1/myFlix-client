@@ -17,7 +17,11 @@ export const MovieCard = ({ movieData, onMovieClick }) => {
       Title: PropTypes.string.isRequired,
       Year: PropTypes.string.isRequired,
       Description: PropTypes.string.isRequired,
-      Genre: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]).isRequired,
+    // Now allows either a string or an array
+    Genre: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+    ]).isRequired,
       Director: PropTypes.string.isRequired,
       _id: PropTypes.string.isRequired,
     }).isRequired,
