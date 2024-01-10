@@ -13,3 +13,9 @@ export const LoginView = () => {
       </form>
     );
   };
+
+  const [user, setUser] = useState(null);
+
+  if (!user) {
+    return <LoginView />;
+  }

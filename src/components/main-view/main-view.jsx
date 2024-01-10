@@ -1,11 +1,19 @@
+//imports
 import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { LoginView } from "../login-view/login-view";
 
 export const MainView = () => {
   const [movies, setMovies] = useState([]);
-
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [user, setUser] = useState(null);
+
+  
+//Serves LoginView if no user is logged in
+if (!user) {
+  return <LoginView />;
+}
 
   useEffect(() => {
     fetch("https://myflixproject-9c1001b14e61.herokuapp.com/movies")
@@ -35,7 +43,7 @@ export const MainView = () => {
       />
     );
   }
-
+//Serves error if list is empty
   if (movies.length === 0) {
     return <div>The list is empty</div>;
   }
