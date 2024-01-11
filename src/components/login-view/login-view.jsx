@@ -7,10 +7,10 @@ export const LoginView = ({ onLoggedIn }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
-      access: username,
-      secret: password,
+      Username: username,
+      Password: password,
     };
-
+  
     fetch("https://myflixproject-9c1001b14e61.herokuapp.com/login", {
       method: "POST",
       headers: {
@@ -18,19 +18,24 @@ export const LoginView = ({ onLoggedIn }) => {
       },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Login response: ", data);
+    .then((response) => {
+      console.log("Server response:", response);
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Login response:", data);
         if (data.user) {
           onLoggedIn(data.user, data.token);
         } else {
           alert("User Not Found");
         }
       })
-      .catch((e) => {
-        alert("Something went wrong");
+      .catch((error) => {
+        console.error("Error during login:", error);
+        alert("Something went wrong during login. Check the console for details.");
       });
   };
+  
 
   return (
     <form onSubmit={handleSubmit}>
