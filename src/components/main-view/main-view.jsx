@@ -50,7 +50,7 @@ export const MainView = () => {
             setToken(token);
           }}
         />
-        {'or'}
+        <span>or</span>
         <SignupView />
       </>
     );
