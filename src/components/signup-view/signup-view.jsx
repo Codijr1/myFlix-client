@@ -23,7 +23,6 @@ export const SignupView = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log("Account Created", data);
-                age
             })
             .catch((error) => {
                 console.error("Error during signup", error);
