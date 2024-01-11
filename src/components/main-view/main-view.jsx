@@ -3,32 +3,23 @@ import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
+import { SignupView } from "../signup-view/signup-view";
 
 export const MainView = () => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
 
-  //Serves LoginView if no user is logged in
-  if (!user) {
-    return (
-      <LoginView
-        onLoggedIn={(user, token) => {
-          setUser(user);
-          setToken(token);
-        }}
-      />
-    );
-  }
-  
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!token) {
       return;
     }
-    fetch("https://myflixproject-9c1001b14e61.herokuapp.com/movies",{
-      headers: {Authorization: `Bearer ${token}`}
+    fetch("https://myflixproject-9c1001b14e61.herokuapp.com/movies", {
+      headers: { Authorization: `Bearer ${token}` }
     })
       .then((response) => response.json())
       .then((data) => {
@@ -46,8 +37,24 @@ export const MainView = () => {
       .catch((error) => {
         console.error('Error importing data', error);
       });
-  },[token]);
-  
+  }, [token]);
+
+
+  //Serves LoginView if no user is logged in
+  if (!user) {
+    return (
+      <>
+        <LoginView
+          onLoggedIn={(user, token) => {
+            setUser(user);
+            setToken(token);
+          }}
+        />
+        {'or'}
+        <SignupView />
+      </>
+    );
+  }
 
   if (selectedMovie) {
     return (
@@ -57,26 +64,23 @@ export const MainView = () => {
       />
     );
   }
-//Serves error if list is empty
+  //Serves error if list is empty
   if (movies.length === 0) {
     return <div>The list is empty</div>;
   }
 
-<button onClick={() => { setUser(null);setToken(null); }}>Logout</button>
-
-  return(
+  return (
     <div>
-      {movies.map((movie)=>(
+      {movies.map((movie) => (
         <MovieCard
           key={movie._id}
           movieData={movie}
-          onMovieClick={()=>{
+          onMovieClick={() => {
             setSelectedMovie(movie);
           }}
         />
       ))}
+      <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
     </div>
-  );
+  )
 };
-
-//https://myflixproject-9c1001b14e61.herokuapp.com/
