@@ -12,7 +12,7 @@ export const MainView = () => {
   
 //Serves LoginView if no user is logged in
 if (!user) {
-  return <LoginView />;
+  return <LoginView onLoggedIn={(user) => setUser(user)} />;
 }
 
   useEffect(() => {
@@ -47,6 +47,8 @@ if (!user) {
   if (movies.length === 0) {
     return <div>The list is empty</div>;
   }
+
+<button onClick={() => { setUser(null); }}>Logout</button>
 
   return(
     <div>
