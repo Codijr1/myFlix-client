@@ -8,15 +8,28 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
+  //Serves LoginView if no user is logged in
+  if (!user) {
+    return (
+      <LoginView
+        onLoggedIn={(user, token) => {
+          setUser(user);
+          setToken(token);
+        }}
+      />
+    );
+  }
   
-//Serves LoginView if no user is logged in
-if (!user) {
-  return <LoginView onLoggedIn={(user) => setUser(user)} />;
-}
 
-  useEffect(() => {
-    fetch("https://myflixproject-9c1001b14e61.herokuapp.com/movies")
+  useEffect(()=>{
+    if (!token) {
+      return;
+    }
+    fetch("https://myflixproject-9c1001b14e61.herokuapp.com/movies",{
+      headers: {Authorization: `Bearer ${token}`}
+    })
       .then((response) => response.json())
       .then((data) => {
         const moviesFromApi = data.map((movie) => ({
@@ -29,11 +42,12 @@ if (!user) {
         }));
         setMovies(moviesFromApi);
       })
-      // just in case
+      //just in case
       .catch((error) => {
         console.error('Error importing data', error);
       });
-  }, []);
+  },[token]);
+  
 
   if (selectedMovie) {
     return (
@@ -48,7 +62,7 @@ if (!user) {
     return <div>The list is empty</div>;
   }
 
-<button onClick={() => { setUser(null); }}>Logout</button>
+<button onClick={() => { setUser(null);setToken(null); }}>Logout</button>
 
   return(
     <div>
