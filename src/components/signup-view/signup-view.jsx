@@ -19,24 +19,28 @@ export const SignupView = () => {
     };
 
     fetch("https://myflixproject-9c1001b14e61.herokuapp.com/signup", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          alert("Signup Successful");
-          window.location.reload();
-        } else {
-          alert("Signup failed");
-        }
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => {
-        console.error("Error during signup:", error);
-        alert("Something went wrong during signup");
-      });
+        .then((response) => {
+          if (response.ok) {
+            alert("Signup Successful");
+            window.location.reload();
+          } else {
+            response.json().then((data) => {
+              console.error("Signup failed:", data);
+            });
+      
+            alert("Signup failed. Please check the console for details.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error during signup:", error);
+          alert("Something went wrong during signup");
+        });
   };
 
   return (
