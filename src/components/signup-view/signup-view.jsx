@@ -1,10 +1,11 @@
-import{ useState } from "react";
+import { useState } from "react";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [birthday, setBirthday] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] =useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,27 +14,30 @@ export const SignupView = () => {
       Username: username,
       Password: password,
       Email: email,
-      Birthday: birthday
+      LastName: lastName,
+      FirstName: firstName
     };
 
     fetch("https://myflixproject-9c1001b14e61.herokuapp.com/signup", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
-        "Content-Type": "application/json"
-      }
-    }).then((response) => {
-      if (response.ok) {
-        alert("Signup Successful");
-        window.location.reload();
-      } else {
-        alert("Signup failed");
-      }
-    });
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Signup Successful");
+          window.location.reload();
+        } else {
+          alert("Signup failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Error during signup:", error);
+        alert("Something went wrong during signup");
+      });
   };
-
-
-
 
   return (
     <form onSubmit={handleSubmit}>
@@ -66,14 +70,24 @@ export const SignupView = () => {
         />
       </label>
       <label>
-        Birthday:
+        Last Name:
         <input
-          type="date"
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
+          type="text"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
           required
         />
       </label>
+      <label>
+        First Name:
+        <input
+          type="text"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+        />
+      </label>
+      
       <button type="submit">Submit</button>
     </form>
   );
