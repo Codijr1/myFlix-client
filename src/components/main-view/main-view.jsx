@@ -13,7 +13,7 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
-
+  //renders the movie list if a user is logged in
   useEffect(() => {
     if (!token) {
       return;
@@ -39,8 +39,7 @@ export const MainView = () => {
       });
   }, [token]);
 
-
-  //Serves LoginView if no user is logged in
+  //Serves LoginView/SignupView if no user is logged in
   if (!user) {
     return (
       <>
@@ -56,6 +55,7 @@ export const MainView = () => {
     );
   }
 
+  //serves MovieView when a MovieCard is clicked
   if (selectedMovie) {
     return (
       <MovieView
@@ -64,11 +64,13 @@ export const MainView = () => {
       />
     );
   }
+
   //Serves error if list is empty
   if (movies.length === 0) {
     return <div>The list is empty</div>;
   }
 
+  //renders list of MovieCards
   return (
     <div>
       {movies.map((movie) => (

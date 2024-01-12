@@ -1,5 +1,7 @@
+//imports
 import React, { useState } from "react";
 
+//hooks
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -10,7 +12,7 @@ export const LoginView = ({ onLoggedIn }) => {
       Username: username,
       Password: password,
     };
-  
+    //sends a POST request to API to log in using existing user data 
     fetch("https://myflixproject-9c1001b14e61.herokuapp.com/login", {
       method: "POST",
       headers: {
@@ -18,12 +20,12 @@ export const LoginView = ({ onLoggedIn }) => {
       },
       body: JSON.stringify(data),
     })
-    .then((response) => {
-      console.log("Server response:", response);
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Login response:", data);
+      .then((response) => {
+        console.log("Server response:", response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Login response:", data);
         if (data.user) {
           onLoggedIn(data.user, data.token);
         } else {
@@ -35,8 +37,8 @@ export const LoginView = ({ onLoggedIn }) => {
         alert("Something went wrong during login. Check the console for details.");
       });
   };
-  
 
+  //renders LoginView component
   return (
     <form onSubmit={handleSubmit}>
       <label>
