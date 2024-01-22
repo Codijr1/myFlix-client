@@ -6,7 +6,7 @@ import './movie-card.scss';
 //creates the MovieCard components
 export const MovieCard = ({ movieData, onMovieClick }) => {
   return (
-    <Card style={{cursor:"pointer"}}onClick={()=>onMovieClick(movieData)}>
+    <Card style={{cursor: "pointer" }} className='h100' onClick={() => onMovieClick(movieData)}>
       <Card.Body>
         <Card.Title>{movieData.Title}</Card.Title>
       </Card.Body>
