@@ -1,6 +1,7 @@
 //imports
 import React from "react";
 import PropTypes from 'prop-types';
+import './movie-view.scss';
 
 //formats and renders MovieView when a MovieCard is clicked
 export const MovieView = ({ movie, onBackClick }) => {
@@ -26,7 +27,7 @@ export const MovieView = ({ movie, onBackClick }) => {
         <span>Director:</span>
         <span>{movie.Director}</span>
       </div>
-      <button onClick={onBackClick}>Back</button>
+      <button onClick={onBackClick} className="back-button" style={{ cursor: "pointer" }}>Back</button>
     </div>
   );
 };
