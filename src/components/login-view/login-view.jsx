@@ -4,8 +4,8 @@ import {Form,Button} from "react-bootstrap";
 
 //hooks
 export const LoginView = ({ onLoggedIn }) => {
-  const [username, setUsername] = useState("Username");
-  const [password, setPassword] = useState("Password");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();

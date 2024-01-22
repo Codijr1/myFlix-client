@@ -30879,8 +30879,8 @@ var _reactBootstrap = require("react-bootstrap");
 var _s = $RefreshSig$();
 const LoginView = ({ onLoggedIn })=>{
     _s();
-    const [username, setUsername] = (0, _react.useState)("Username");
-    const [password, setPassword] = (0, _react.useState)("Password");
+    const [username, setUsername] = (0, _react.useState)("");
+    const [password, setPassword] = (0, _react.useState)("");
     const handleSubmit = (event)=>{
         event.preventDefault();
         const data = {
@@ -30976,7 +30976,7 @@ const LoginView = ({ onLoggedIn })=>{
         columnNumber: 5
     }, undefined);
 };
-_s(LoginView, "9jT3eTopCfW/wOj2DtFsPfuWURk=");
+_s(LoginView, "Lrw7JeD9zj6OUWhT/IH4OIvPKEk=");
 _c = LoginView;
 var _c;
 $RefreshReg$(_c, "LoginView");
