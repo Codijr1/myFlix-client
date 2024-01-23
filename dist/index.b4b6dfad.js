@@ -30880,8 +30880,8 @@ var _reactBootstrap = require("react-bootstrap");
 var _s = $RefreshSig$();
 const LoginView = ({ onLoggedIn })=>{
     _s();
-    const [username, setUsername] = (0, _react.useState)("");
-    const [password, setPassword] = (0, _react.useState)("");
+    const [username, setUsername] = (0, _react.useState)("Username");
+    const [password, setPassword] = (0, _react.useState)("Password");
     const handleSubmit = (event)=>{
         event.preventDefault();
         const data = {
@@ -30928,7 +30928,7 @@ const LoginView = ({ onLoggedIn })=>{
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
                         lineNumber: 47,
-                        columnNumber: 11
+                        columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
@@ -30953,7 +30953,7 @@ const LoginView = ({ onLoggedIn })=>{
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
                         lineNumber: 57,
-                        columnNumber: 11
+                        columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
@@ -30977,7 +30977,7 @@ const LoginView = ({ onLoggedIn })=>{
         columnNumber: 5
     }, undefined);
 };
-_s(LoginView, "Lrw7JeD9zj6OUWhT/IH4OIvPKEk=");
+_s(LoginView, "9jT3eTopCfW/wOj2DtFsPfuWURk=");
 _c = LoginView;
 var _c;
 $RefreshReg$(_c, "LoginView");

@@ -1,11 +1,11 @@
 //imports
-import React, {useState} from "react";
-import {Form,Button} from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button } from "react-bootstrap";
 
 //hooks
 export const LoginView = ({ onLoggedIn }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("Username");
+  const [password, setPassword] = useState("Password");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,22 +44,22 @@ export const LoginView = ({ onLoggedIn }) => {
     <Form onSubmit={handleSubmit}>
       <Form.Group>
         <Form.Label>Username:</Form.Label>
-          <Form.Control
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+        <Form.Control
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
       </Form.Group>
 
       <Form.Group>
         <Form.Label>Password:</Form.Label>
-          <Form.Control
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <Form.Control
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
       </Form.Group>
       <Button variant='primary' type='submit'>Submit</Button>
     </Form>
