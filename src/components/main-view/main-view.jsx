@@ -16,13 +16,6 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
-  // Hardcoded sample movies for testing
-  const hardcodedMovies = [
-    { Title: 'Movie 1', Year: 2022, Description: 'Description 1', Genre: 'Action', Director: 'Director 1', _id: '1' },
-    { Title: 'Movie 2', Year: 2023, Description: 'Description 2', Genre: 'Comedy', Director: 'Director 2', _id: '2' },
-    // Add more sample movies as needed
-  ];
-
   //renders the movie list if a user is logged in
   useEffect(() => {
     if (!token) {
