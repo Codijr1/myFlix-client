@@ -1,14 +1,20 @@
 //imports
 import PropTypes from 'prop-types';
-import {Card} from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import './movie-card.scss';
+import { Link } from 'react-router-dom';
 
 //creates the MovieCard components
 export const MovieCard = ({ movieData, onMovieClick }) => {
+  //debug
+  console.log('MovieCard data:', movieData)
   return (
-    <Card style={{cursor: "pointer" }} className='h100' onClick={() => onMovieClick(movieData)}>
+    <Card style={{ cursor: "pointer" }} className='h100' onClick={() => onMovieClick(movieData)}>
       <Card.Body>
         <Card.Title>{movieData.Title}</Card.Title>
+        <Link to={`/movies/${encodeURIComponent(movieData.Title)}`}>
+          <Button variant="link">Open</Button>
+        </Link>
       </Card.Body>
     </Card>
   );
