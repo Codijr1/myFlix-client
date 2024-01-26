@@ -2,9 +2,15 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import './movie-view.scss';
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+
 
 //formats and renders MovieView when a MovieCard is clicked
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movies }) => {
+  const { movieId } = useParams();
+  const movie = movies.find((m) => m.id === movieId)
+
   return (
     <div>
       <div>
@@ -27,8 +33,10 @@ export const MovieView = ({ movie, onBackClick }) => {
         <span>Director:</span>
         <span>{movie.Director}</span>
       </div>
-      <button onClick={onBackClick} className="back-button" style={{ cursor: "pointer" }}>Back</button>
-    </div>
+      <Link to={`/`}>
+        <button onClick={onBackClick} className="back-button" style={{ cursor: "pointer" }}>Back</button>
+      </Link>
+    </div >
   );
 };
 

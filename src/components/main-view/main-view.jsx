@@ -96,13 +96,13 @@ export const MainView = () => {
           />
           {/* serves MovieView if user detected else LoginView*/}
           <Route
-            path="/movies/:Title"
+            path="/movies/:Id"
             element={
               <>
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
-                  <Col>The list appears empty 1</Col>
+                  <Col>The list appears empty</Col>
                 ) : (
                   <Col md={8}>
                     <MovieView movies={movies} />
@@ -119,7 +119,7 @@ export const MainView = () => {
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
-                  <Col>The list appears empty 2</Col>
+                  <Col>Loading...</Col>
                 ) : (
                   <>
                     {movies.map((movie) => (
