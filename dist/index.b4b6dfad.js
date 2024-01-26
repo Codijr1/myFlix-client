@@ -27631,21 +27631,6 @@ const MovieCard = ({ movieData, onMovieClick })=>{
     }, undefined);
 };
 _c = MovieCard;
-// //creates the MovieCards 
-// export const MovieCard = ({ movieData, onMovieClick }) => {
-//   //debug
-//   console.log('MovieCard data:', movieData)
-//   return (
-//     <Card style={{ cursor: "pointer" }} className='h100' onClick={() => onMovieClick(movieData)}>
-//       <Card.Body>
-//         <Card.Title>{movieData.Title}</Card.Title>
-//         <Link to={`/movies/${encodeURIComponent(movieData.Title)}`}>
-//           <Button variant="link">Open</Button>
-//         </Link>
-//       </Card.Body>
-//     </Card>
-//   );
-// };
 //defines accepted data form
 MovieCard.propTypes = {
     movieData: (0, _propTypesDefault.default).shape({
@@ -27660,7 +27645,21 @@ MovieCard.propTypes = {
         _id: (0, _propTypesDefault.default).string.isRequired
     }).isRequired,
     onMovieClick: (0, _propTypesDefault.default).func.isRequired
-};
+}; // //creates the MovieCards
+ // export const MovieCard = ({ movieData, onMovieClick }) => {
+ //   //debug
+ //   console.log('MovieCard data:', movieData)
+ //   return (
+ //     <Card style={{ cursor: "pointer" }} className='h100' onClick={() => onMovieClick(movieData)}>
+ //       <Card.Body>
+ //         <Card.Title>{movieData.Title}</Card.Title>
+ //         <Link to={`/movies/${encodeURIComponent(movieData.Title)}`}>
+ //           <Button variant="link">Open</Button>
+ //         </Link>
+ //       </Card.Body>
+ //     </Card>
+ //   );
+ // };
 var _c;
 $RefreshReg$(_c, "MovieCard");
 
