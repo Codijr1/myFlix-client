@@ -19,7 +19,6 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   //renders the movie list if a user is logged in
-  // renders the movie list if a user is logged in
   useEffect(() => {
     if (!token) {
       return;
@@ -33,10 +32,6 @@ export const MainView = () => {
       })
       .then((data) => {
         console.log('Data from API:', data);
-        if (!data || !Array.isArray(data)) {
-          console.error('Invalid data received from the API:', data);
-          return;
-        }
         const moviesFromApi = data.map((movie) => ({
           Title: movie.title,
           Year: movie.year,
@@ -55,8 +50,8 @@ export const MainView = () => {
 
 
   //debug
-  console.log('Movies length:', movies.length);
-  console.log('Movies data:', movies);
+  // console.log('Movies length:', movies.length);
+  // console.log('Movies data:', movies);
 
   return (
     <BrowserRouter>

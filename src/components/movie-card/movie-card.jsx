@@ -6,19 +6,30 @@ import { Link } from 'react-router-dom';
 
 //creates the MovieCard components
 export const MovieCard = ({ movieData, onMovieClick }) => {
-  //debug
-  console.log('MovieCard data:', movieData)
   return (
     <Card style={{ cursor: "pointer" }} className='h100' onClick={() => onMovieClick(movieData)}>
       <Card.Body>
         <Card.Title>{movieData.Title}</Card.Title>
-        <Link to={`/movies/${encodeURIComponent(movieData.Title)}`}>
-          <Button variant="link">Open</Button>
-        </Link>
       </Card.Body>
     </Card>
   );
 };
+
+// //creates the MovieCards 
+// export const MovieCard = ({ movieData, onMovieClick }) => {
+//   //debug
+//   console.log('MovieCard data:', movieData)
+//   return (
+//     <Card style={{ cursor: "pointer" }} className='h100' onClick={() => onMovieClick(movieData)}>
+//       <Card.Body>
+//         <Card.Title>{movieData.Title}</Card.Title>
+//         <Link to={`/movies/${encodeURIComponent(movieData.Title)}`}>
+//           <Button variant="link">Open</Button>
+//         </Link>
+//       </Card.Body>
+//     </Card>
+//   );
+// };
 
 //defines accepted data form
 MovieCard.propTypes = {
