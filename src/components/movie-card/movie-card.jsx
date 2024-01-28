@@ -4,34 +4,21 @@ import { Button, Card } from "react-bootstrap";
 import './movie-card.scss';
 import { Link } from 'react-router-dom';
 
-//creates the MovieCard components
-
-//creates the MovieCards
-export const MovieCard = ({ movieData, onMovieClick }) => {
+//renders the MovieCard component
+export const MovieCard = ({ movieData }) => {
   //debug
   console.log('MovieCard data:', movieData)
   return (
-    <Card style={{ cursor: "pointer" }} className='h100' onClick={() => onMovieClick(movieData)}>
+    <Card>
       <Card.Body>
         <Card.Title>{movieData.Title}</Card.Title>
-        <Link to={`/movies/${encodeURIComponent(movieData.Title)}`}>
+        <Link to={`/movies/${encodeURIComponent(movieData._id)}`}>
+          <Button variant="link">Open</Button>
         </Link>
       </Card.Body>
     </Card>
   );
 };
-
-// export const MovieCard = ({ movieData, onMovieClick }) => {
-//   return (
-//     <Card style={{ cursor: "pointer" }} className='h100' onClick={() => onMovieClick(movieData)}>
-//       <Card.Body>
-//         <Card.Title>{movieData.Title}</Card.Title>
-//       </Card.Body>
-//     </Card>
-//   );
-// };
-
-
 
 //defines accepted data form
 MovieCard.propTypes = {
@@ -45,7 +32,5 @@ MovieCard.propTypes = {
     ]).isRequired,
     Director: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,
-  }).isRequired,
-  onMovieClick: PropTypes.func.isRequired,
+  }).isRequired
 };
-

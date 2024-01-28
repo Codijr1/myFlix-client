@@ -38,7 +38,7 @@ export const MainView = () => {
           Director: movie.director,
           _id: movie._id.$oid,
         }));
-        console.log('Transformed Movies:', moviesFromApi);
+        // console.log('Transformed Movies:', moviesFromApi);
         setMovies(moviesFromApi);
       })
       .catch((error) => {
@@ -48,8 +48,8 @@ export const MainView = () => {
 
 
   //debug
-  console.log('Movies length:', movies.length);
-  console.log('Movies data:', movies);
+  // console.log('Movies length:', movies.length);
+  // console.log('Movies data:', movies);
 
   return (
     <BrowserRouter>
