@@ -1,41 +1,64 @@
 import React, { useState, useEffect } from 'react';
 
-export const ProfileView = () => {
-    // store user data
+export const ProfileView = ({ user }) => {
+    //debug
+    // console.log('User Data', user);
     const [userData, setUserData] = useState(null);
 
-    // fetches users JSON from API
     useEffect(() => {
-        const users = 'https://myflixproject-9c1001b14e61.herokuapp.com/users';
-
-        fetch(users, {
-            method: 'GET',
-            headers: {
-                // Include any headers needed for authentication
-                // For example, if using JWT token:
-                // 'Authorization': `Bearer ${yourAuthToken}`
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                setUserData(data);
+        //debug
+        console.log('Fetching user data');
+        if (user) {
+            //debug
+            // console.log('User present', user);
+            const profileUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com/users';
+            fetch(profileUrl, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
             })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-            });
-    }, []);
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    //debug
+                    // console.log('Received user data from server:', data);
+                    const loggedInUserId = user._id;
+                    const loggedInUser = data.find(user => user._id === loggedInUserId);
 
-    //catch
+                    if (loggedInUser) {
+                        setUserData(loggedInUser);
+                    } else {
+                        console.error('Logged-in user data not found in the array.');
+                        setUserData(null);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                });
+        }
+    }, [user]);
+
     if (!userData) {
         return <div>Loading...</div>;
     }
 
-    // serves user profile
     return (
         <div>
             <h2>User Profile</h2>
-            <p>Name: {userData.name}</p>
-            <p>Email: {userData.email}</p>
+            {userData ? (
+                <>
+                    <p>Username: {userData.Username}</p>
+                    <p>Email: {userData.Email}</p>
+                    {/* more info to come once this works */}
+                </>
+            ) : (
+                <p>User data not available.</p>
+            )}
         </div>
     );
 };

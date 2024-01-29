@@ -96,7 +96,7 @@ export const MainView = () => {
               </>
             }
           />
-          {/* serves MovieView if user detected else LoginView*/}
+          {/* serves MovieView if MovieCard is clicked and user detected else LoginView*/}
           <Route
             path="/movies/:_id"
             element={
@@ -136,12 +136,13 @@ export const MainView = () => {
               </>
             }
           />
+          {/* serves profile view if user detected else login view */}
           <Route
-            path="/users/:Username"
+            path="/users"
             element={
               <>
                 {user ? (
-                  <ProfileView />
+                  <ProfileView user={user} />
                 ) : (
                   <Navigate to="/login" />
                 )}

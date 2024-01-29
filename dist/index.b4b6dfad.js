@@ -27529,23 +27529,25 @@ const MainView = ()=>{
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                            path: "/users/:Username",
+                            path: "/users",
                             element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-                                children: user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _profileView.ProfileView), {}, void 0, false, {
+                                children: user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _profileView.ProfileView), {
+                                    user: user
+                                }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 144,
+                                    lineNumber: 145,
                                     columnNumber: 19
                                 }, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
                                     to: "/login"
                                 }, void 0, false, {
                                     fileName: "src/components/main-view/main-view.jsx",
-                                    lineNumber: 146,
+                                    lineNumber: 147,
                                     columnNumber: 19
                                 }, void 0)
                             }, void 0, false)
                         }, void 0, false, {
                             fileName: "src/components/main-view/main-view.jsx",
-                            lineNumber: 139,
+                            lineNumber: 140,
                             columnNumber: 11
                         }, undefined)
                     ]
@@ -41842,65 +41844,93 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _s = $RefreshSig$();
-const ProfileView = ()=>{
+const ProfileView = ({ user })=>{
     _s();
-    // store user data
+    //debug
+    // console.log('User Data', user);
     const [userData, setUserData] = (0, _react.useState)(null);
-    // fetches users JSON from API
     (0, _react.useEffect)(()=>{
-        const users = "https://myflixproject-9c1001b14e61.herokuapp.com/users";
-        fetch(users, {
-            method: "GET",
-            headers: {
-            }
-        }).then((response)=>response.json()).then((data)=>{
-            setUserData(data);
-        }).catch((error)=>{
-            console.error("Error fetching user data:", error);
-        });
-    }, []);
-    //catch
+        //debug
+        console.log("Fetching user data");
+        if (user) {
+            //debug
+            // console.log('User present', user);
+            const profileUrl = "https://myflixproject-9c1001b14e61.herokuapp.com/users";
+            fetch(profileUrl, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            }).then((response)=>{
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                return response.json();
+            }).then((data)=>{
+                //debug
+                // console.log('Received user data from server:', data);
+                const loggedInUserId = user._id;
+                const loggedInUser = data.find((user)=>user._id === loggedInUserId);
+                if (loggedInUser) setUserData(loggedInUser);
+                else {
+                    console.error("Logged-in user data not found in the array.");
+                    setUserData(null);
+                }
+            }).catch((error)=>{
+                console.error("Error fetching user data:", error);
+            });
+        }
+    }, [
+        user
+    ]);
     if (!userData) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "Loading..."
     }, void 0, false, {
         fileName: "src/components/profile-view/profile-view.jsx",
-        lineNumber: 30,
+        lineNumber: 47,
         columnNumber: 16
     }, undefined);
-    // serves user profile
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                 children: "User Profile"
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 36,
+                lineNumber: 52,
                 columnNumber: 13
             }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+            userData ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                 children: [
-                    "Name: ",
-                    userData.name
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                        children: [
+                            "Username: ",
+                            userData.Username
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 55,
+                        columnNumber: 21
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                        children: [
+                            "Email: ",
+                            userData.Email
+                        ]
+                    }, void 0, true, {
+                        fileName: "src/components/profile-view/profile-view.jsx",
+                        lineNumber: 56,
+                        columnNumber: 21
+                    }, undefined)
                 ]
-            }, void 0, true, {
+            }, void 0, true) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                children: "User data not available."
+            }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 37,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                children: [
-                    "Email: ",
-                    userData.email
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 38,
-                columnNumber: 13
+                lineNumber: 60,
+                columnNumber: 17
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/profile-view/profile-view.jsx",
-        lineNumber: 35,
+        lineNumber: 51,
         columnNumber: 9
     }, undefined);
 };
