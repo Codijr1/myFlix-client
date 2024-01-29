@@ -7,13 +7,12 @@ import { Link } from 'react-router-dom';
 //renders the MovieCard component
 export const MovieCard = ({ movieData }) => {
   //debug
-  console.log('MovieCard data:', movieData)
+  // console.log('MovieCard data:', movieData)
   return (
     <Card>
       <Card.Body>
         <Card.Title>{movieData.Title}</Card.Title>
         <Link to={`/movies/${encodeURIComponent(movieData._id)}`}>
-          <Button variant="link">Open</Button>
         </Link>
       </Card.Body>
     </Card>

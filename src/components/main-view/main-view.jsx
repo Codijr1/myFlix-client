@@ -5,7 +5,7 @@ import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { Col, Row, Button } from "react-bootstrap";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 
 export const MainView = () => {
@@ -14,7 +14,6 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
 
   //renders the movie list if a user is logged in
   useEffect(() => {
@@ -36,7 +35,7 @@ export const MainView = () => {
           Description: movie.description,
           Genre: movie.genre,
           Director: movie.director,
-          _id: movie._id.$oid,
+          _id: movie._id,
         }));
         // console.log('Transformed Movies:', moviesFromApi);
         setMovies(moviesFromApi);
@@ -96,7 +95,7 @@ export const MainView = () => {
           />
           {/* serves MovieView if user detected else LoginView*/}
           <Route
-            path="/movies/:Id"
+            path="/movies/:_id"
             element={
               <>
                 {!user ? (
@@ -124,7 +123,9 @@ export const MainView = () => {
                   <>
                     {movies.map((movie) => (
                       <Col md={6} lg={4} xl={3} className="mb-5 col-8" key={movie._id}>
-                        <MovieCard movieData={movie} />
+                        <Link to={`/movies/${movie._id}`}>
+                          <MovieCard movieData={movie} />
+                        </Link>
                       </Col>
                     ))}
                   </>
