@@ -4,6 +4,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import { ProfileView } from "../profile-view/profile-view";
 import { Col, Row, Button } from "react-bootstrap";
 import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
@@ -24,11 +25,13 @@ export const MainView = () => {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then((response) => {
-        console.log('API Response:', response);
+        //debug
+        // console.log('API Response:', response);
         return response.json();
       })
       .then((data) => {
-        console.log('Data from API:', data);
+        //debug
+        // console.log('Data from API:', data);
         const moviesFromApi = data.map((movie) => ({
           Title: movie.title,
           Year: movie.year,
@@ -129,6 +132,18 @@ export const MainView = () => {
                       </Col>
                     ))}
                   </>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/users/:Username"
+            element={
+              <>
+                {user ? (
+                  <ProfileView />
+                ) : (
+                  <Navigate to="/login" />
                 )}
               </>
             }

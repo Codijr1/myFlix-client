@@ -41,7 +41,7 @@ export const MovieView = ({ movies }) => {
           </div>
           <div>
             <span>Director:</span>
-            <span>{movie.Director}</span>
+            <span>{Array.isArray(movie.Director) ? movie.Director.join(", ") : movie.Director}</span>
           </div>
           <Link to={`/`}>
             <Button className="back-button" style={{ cursor: "pointer" }}>Back</Button>

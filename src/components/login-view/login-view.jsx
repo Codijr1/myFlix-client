@@ -22,11 +22,13 @@ export const LoginView = ({ onLoggedIn }) => {
       body: JSON.stringify(data),
     })
       .then((response) => {
-        console.log("Server response:", response);
+        //debug
+        // console.log("Server response:", response);
         return response.json();
       })
       .then((data) => {
-        console.log("Login response:", data);
+        //debug
+        // console.log("Login response:", data);
         if (data.user) {
           onLoggedIn(data.user, data.token);
         } else {
