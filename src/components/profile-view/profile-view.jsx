@@ -8,10 +8,14 @@ export const ProfileView = ({ user }) => {
     useEffect(() => {
         //debug
         console.log('Fetching user data');
+
         if (user) {
             //debug
-            // console.log('User present', user);
-            const profileUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com/users';
+            console.log('User present', user);
+            console.log('User token', user.token);
+
+            const profileUrl = `https://myflixproject-9c1001b14e61.herokuapp.com/users/${user.Username}`;
+
             fetch(profileUrl, {
                 method: 'GET',
                 headers: {
@@ -19,27 +23,22 @@ export const ProfileView = ({ user }) => {
                 },
             })
                 .then(response => {
+                    //debug
+                    console.log('undefined?', user.token);
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
                     return response.json();
                 })
                 .then(data => {
-                    //debug
-                    // console.log('Received user data from server:', data);
-                    const loggedInUserId = user._id;
-                    const loggedInUser = data.find(user => user._id === loggedInUserId);
-
-                    if (loggedInUser) {
-                        setUserData(loggedInUser);
-                    } else {
-                        console.error('Logged-in user data not found in the array.');
-                        setUserData(null);
-                    }
+                    setUserData(data);
                 })
                 .catch(error => {
                     console.error('Error fetching user data:', error);
                 });
+        } else {
+            console.log('User missing, cannot fetch user data.');
+            setUserData(null);
         }
     }, [user]);
 

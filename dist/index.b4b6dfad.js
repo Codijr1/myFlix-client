@@ -27529,7 +27529,7 @@ const MainView = ()=>{
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                            path: "/users",
+                            path: "/users/:Username",
                             element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                                 children: user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _profileView.ProfileView), {
                                     user: user
@@ -41409,11 +41409,14 @@ const LoginView = ({ onLoggedIn })=>{
         }).then((data)=>{
             //debug
             // console.log("Login response:", data);
-            if (data.user) onLoggedIn(data.user, data.token);
-            else alert("User Not Found");
+            if (data.user) {
+                console.log("Token received:", data.token);
+                onLoggedIn(data.user, data.token);
+            } else alert("User Not Found");
         }).catch((error)=>{
             console.error("Error during login:", error);
-            alert("Something went wrong during login. Check the console for details.");
+            if (error instanceof TypeError && error.message === "Failed to fetch") alert("Failed to connect to the server. Please try again later.");
+            else alert("Login failed. Please check your credentials and try again.");
         });
     };
     //renders LoginView component
@@ -41426,7 +41429,7 @@ const LoginView = ({ onLoggedIn })=>{
                         children: "Username:"
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 48,
+                        lineNumber: 54,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -41436,13 +41439,13 @@ const LoginView = ({ onLoggedIn })=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 49,
+                        lineNumber: 55,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 47,
+                lineNumber: 53,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -41451,7 +41454,7 @@ const LoginView = ({ onLoggedIn })=>{
                         children: "Password:"
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 58,
+                        lineNumber: 64,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -41461,13 +41464,13 @@ const LoginView = ({ onLoggedIn })=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 59,
+                        lineNumber: 65,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 57,
+                lineNumber: 63,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
@@ -41476,13 +41479,13 @@ const LoginView = ({ onLoggedIn })=>{
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 66,
+                lineNumber: 72,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/login-view/login-view.jsx",
-        lineNumber: 46,
+        lineNumber: 52,
         columnNumber: 5
     }, undefined);
 };
@@ -41781,7 +41784,7 @@ const NavigationBar = ({ user, onLoggedOut })=>{
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Nav).Link, {
                                         as: (0, _reactRouterDom.Link),
-                                        to: "/users",
+                                        to: "/users/:Username",
                                         children: "My Profile"
                                     }, void 0, false, {
                                         fileName: "src/components/navigation-bar/navigation-bar.jsx",
@@ -41854,29 +41857,27 @@ const ProfileView = ({ user })=>{
         console.log("Fetching user data");
         if (user) {
             //debug
-            // console.log('User present', user);
-            const profileUrl = "https://myflixproject-9c1001b14e61.herokuapp.com/users";
+            console.log("User present", user);
+            console.log("User token", user.token);
+            const profileUrl = `https://myflixproject-9c1001b14e61.herokuapp.com/users/${user.Username}`;
             fetch(profileUrl, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${user.token}`
                 }
             }).then((response)=>{
+                //debug
+                console.log("undefined?", user.token);
                 if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                 return response.json();
             }).then((data)=>{
-                //debug
-                // console.log('Received user data from server:', data);
-                const loggedInUserId = user._id;
-                const loggedInUser = data.find((user)=>user._id === loggedInUserId);
-                if (loggedInUser) setUserData(loggedInUser);
-                else {
-                    console.error("Logged-in user data not found in the array.");
-                    setUserData(null);
-                }
+                setUserData(data);
             }).catch((error)=>{
                 console.error("Error fetching user data:", error);
             });
+        } else {
+            console.log("User missing, cannot fetch user data.");
+            setUserData(null);
         }
     }, [
         user
@@ -41885,7 +41886,7 @@ const ProfileView = ({ user })=>{
         children: "Loading..."
     }, void 0, false, {
         fileName: "src/components/profile-view/profile-view.jsx",
-        lineNumber: 47,
+        lineNumber: 46,
         columnNumber: 16
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -41894,7 +41895,7 @@ const ProfileView = ({ user })=>{
                 children: "User Profile"
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 52,
+                lineNumber: 51,
                 columnNumber: 13
             }, undefined),
             userData ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
@@ -41906,7 +41907,7 @@ const ProfileView = ({ user })=>{
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 55,
+                        lineNumber: 54,
                         columnNumber: 21
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -41916,7 +41917,7 @@ const ProfileView = ({ user })=>{
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 56,
+                        lineNumber: 55,
                         columnNumber: 21
                     }, undefined)
                 ]
@@ -41924,13 +41925,13 @@ const ProfileView = ({ user })=>{
                 children: "User data not available."
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 60,
+                lineNumber: 59,
                 columnNumber: 17
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/profile-view/profile-view.jsx",
-        lineNumber: 51,
+        lineNumber: 50,
         columnNumber: 9
     }, undefined);
 };

@@ -30,6 +30,7 @@ export const LoginView = ({ onLoggedIn }) => {
         //debug
         // console.log("Login response:", data);
         if (data.user) {
+          console.log('Token received:', data.token);
           onLoggedIn(data.user, data.token);
         } else {
           alert("User Not Found");
@@ -37,7 +38,12 @@ export const LoginView = ({ onLoggedIn }) => {
       })
       .catch((error) => {
         console.error("Error during login:", error);
-        alert("Something went wrong during login. Check the console for details.");
+
+        if (error instanceof TypeError && error.message === 'Failed to fetch') {
+          alert('Failed to connect to the server. Please try again later.');
+        } else {
+          alert('Login failed. Please check your credentials and try again.');
+        }
       });
   };
 
