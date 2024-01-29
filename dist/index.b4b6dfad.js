@@ -27529,7 +27529,7 @@ const MainView = ()=>{
                             columnNumber: 11
                         }, undefined),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
-                            path: "/users/:Username",
+                            path: "/users/profile",
                             element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                                 children: user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _profileView.ProfileView), {
                                     user: user
@@ -41782,7 +41782,7 @@ const NavigationBar = ({ user, onLoggedOut })=>{
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Nav).Link, {
                                         as: (0, _reactRouterDom.Link),
-                                        to: "/users/:Username",
+                                        to: "/users/profile",
                                         children: "My Profile"
                                     }, void 0, false, {
                                         fileName: "src/components/navigation-bar/navigation-bar.jsx",
@@ -41855,7 +41855,7 @@ const ProfileView = ({ user })=>{
         if (user) {
             //debug
             // console.log('User present', user);
-            const profileUrl = "https://myflixproject-9c1001b14e61.herokuapp.com/users";
+            const profileUrl = "https://myflixproject-9c1001b14e61.herokuapp.com/users/";
             fetch(profileUrl, {
                 method: "GET",
                 headers: {

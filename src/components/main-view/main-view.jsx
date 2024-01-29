@@ -138,7 +138,7 @@ export const MainView = () => {
           />
           {/* serves profile view if user detected else login view */}
           <Route
-            path="/users/:Username"
+            path="/users/profile"
             element={
               <>
                 {user ? (

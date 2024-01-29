@@ -10,7 +10,7 @@ export const ProfileView = ({ user }) => {
         if (user) {
             //debug
             // console.log('User present', user);
-            const profileUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com/users';
+            const profileUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com/users/';
             fetch(profileUrl, {
                 method: 'GET',
                 headers: {
