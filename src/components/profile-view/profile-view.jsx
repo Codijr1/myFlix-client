@@ -1,55 +1,62 @@
-// imports
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
 
-// ProfileView component
 export const ProfileView = ({ user }) => {
+    //debug
+    // console.log('User Data', user);
     const [userData, setUserData] = useState(null);
-    const { Username } = useParams();
 
-    useEffect(() => {
-        const storedToken = localStorage.getItem("token");
-
-        // If there is a stored token, fetch the user data using the token
-        if (storedToken) {
-            fetch(`https://myflixproject-9c1001b14e61.herokuapp.com/users/${Username}`, {
-                method: "GET",
+    useEffect(() => {        //debug
+        console.log('Fetching user data');
+        if (user) {
+            //debug
+            // console.log('User present', user);
+            const profileUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com/users';
+            fetch(profileUrl, {
+                method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${storedToken}`,
+                    Authorization: `Bearer ${user.token}`,
                 },
             })
-                .then((response) => {
+                .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
                     return response.json();
                 })
-                .then((data) => {
-                    console.log("User data:", data);
-                    setUserData(data);
+                .then(data => {
+                    //debug
+                    // console.log('Received user data from server:', data);
+                    const loggedInUserId = user._id;
+                    const loggedInUser = data.find(user => user._id === loggedInUserId);
+
+                    if (loggedInUser) {
+                        setUserData(loggedInUser);
+                    } else {
+                        console.error('Logged-in user data not found in the array.');
+                        setUserData(null);
+                    }
                 })
-                .catch((error) => {
-                    console.error("Error fetching user data:", error.message);
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
                 });
         }
-    }, [Username]);
+    }, [user]);
 
-
-    // If userData is still null, you can show a loading message or spinner
     if (!userData) {
         return <div>Loading...</div>;
     }
-    // renders ProfileView component
     return (
         <div>
-            <h2>{userData.Username}'s Profile</h2>
-            <div>
-                <strong>Username:</strong> {userData.Username}
-            </div>
-            <div>
-                <strong>Email:</strong> {userData.Email}
-            </div>
-            {/* will add more later*/}
+            <h2>User Profile</h2>
+            {userData ? (
+                <>
+                    <p>Username: {userData.Username}</p>
+                    <p>Email: {userData.Email}</p>
+                    {/* more info to come once this works */}
+                </>
+            ) : (
+                <p>User data not available.</p>
+            )}
         </div>
     );
 };

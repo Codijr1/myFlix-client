@@ -41838,106 +41838,103 @@ var prevRefreshSig = window.$RefreshSig$;
 $parcel$ReactRefreshHelpers$3c12.prelude(module);
 
 try {
-// imports
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ProfileView", ()=>ProfileView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
-var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
 const ProfileView = ({ user })=>{
     _s();
+    //debug
+    // console.log('User Data', user);
     const [userData, setUserData] = (0, _react.useState)(null);
-    const { Username } = (0, _reactRouterDom.useParams)();
     (0, _react.useEffect)(()=>{
-        const storedToken = localStorage.getItem("token");
-        // If there is a stored token, fetch the user data using the token
-        if (storedToken) fetch(`https://myflixproject-9c1001b14e61.herokuapp.com/users/${Username}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${storedToken}`
-            }
-        }).then((response)=>{
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-            return response.json();
-        }).then((data)=>{
-            console.log("User data:", data);
-            setUserData(data);
-        }).catch((error)=>{
-            console.error("Error fetching user data:", error.message);
-        });
+        console.log("Fetching user data");
+        if (user) {
+            //debug
+            // console.log('User present', user);
+            const profileUrl = "https://myflixproject-9c1001b14e61.herokuapp.com/users";
+            fetch(profileUrl, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            }).then((response)=>{
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                return response.json();
+            }).then((data)=>{
+                //debug
+                // console.log('Received user data from server:', data);
+                const loggedInUserId = user._id;
+                const loggedInUser = data.find((user)=>user._id === loggedInUserId);
+                if (loggedInUser) setUserData(loggedInUser);
+                else {
+                    console.error("Logged-in user data not found in the array.");
+                    setUserData(null);
+                }
+            }).catch((error)=>{
+                console.error("Error fetching user data:", error);
+            });
+        }
     }, [
-        Username
+        user
     ]);
-    // If userData is still null, you can show a loading message or spinner
     if (!userData) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "Loading..."
     }, void 0, false, {
         fileName: "src/components/profile-view/profile-view.jsx",
-        lineNumber: 40,
+        lineNumber: 46,
         columnNumber: 16
     }, undefined);
-    // renders ProfileView component
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                children: [
-                    userData.Username,
-                    "'s Profile"
-                ]
-            }, void 0, true, {
+                children: "User Profile"
+            }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 45,
+                lineNumber: 50,
                 columnNumber: 13
             }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            userData ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                 children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("strong", {
-                        children: "Username:"
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                        children: [
+                            "Username: ",
+                            userData.Username
+                        ]
+                    }, void 0, true, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 47,
-                        columnNumber: 17
+                        lineNumber: 53,
+                        columnNumber: 21
                     }, undefined),
-                    " ",
-                    userData.Username
-                ]
-            }, void 0, true, {
-                fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 46,
-                columnNumber: 13
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("strong", {
-                        children: "Email:"
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                        children: [
+                            "Email: ",
+                            userData.Email
+                        ]
+                    }, void 0, true, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 50,
-                        columnNumber: 17
-                    }, undefined),
-                    " ",
-                    userData.Email
+                        lineNumber: 54,
+                        columnNumber: 21
+                    }, undefined)
                 ]
-            }, void 0, true, {
+            }, void 0, true) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                children: "User data not available."
+            }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 49,
-                columnNumber: 13
+                lineNumber: 58,
+                columnNumber: 17
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/profile-view/profile-view.jsx",
-        lineNumber: 44,
+        lineNumber: 49,
         columnNumber: 9
     }, undefined);
 };
-_s(ProfileView, "sq8A3ZgAtzWBjxTzJ+MPw239RGE=", false, function() {
-    return [
-        (0, _reactRouterDom.useParams)
-    ];
-});
+_s(ProfileView, "Q/bN2hINckB+VINYSZfns3MkAk8=");
 _c = ProfileView;
 var _c;
 $RefreshReg$(_c, "ProfileView");
@@ -41947,6 +41944,6 @@ $RefreshReg$(_c, "ProfileView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"9xmpe"}],"i5LP7":[function() {},{}],"lJZlQ":[function() {},{}]},["5qIsR","1xC6H","d8Dch"], "d8Dch", "parcelRequireaec4")
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"i5LP7":[function() {},{}],"lJZlQ":[function() {},{}]},["5qIsR","1xC6H","d8Dch"], "d8Dch", "parcelRequireaec4")
 
 //# sourceMappingURL=index.b4b6dfad.js.map
