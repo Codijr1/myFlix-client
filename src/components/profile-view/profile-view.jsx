@@ -1,63 +1,55 @@
-import React, { useState, useEffect } from 'react';
+// imports
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
+// ProfileView component
 export const ProfileView = ({ user }) => {
-    //debug
-    // console.log('User Data', user);
     const [userData, setUserData] = useState(null);
+    const { Username } = useParams();
 
     useEffect(() => {
-        //debug
-        console.log('Fetching user data');
+        const storedToken = localStorage.getItem("token");
 
-        if (user) {
-            //debug
-            console.log('User present', user);
-            console.log('User token', user.token);
-
-            const profileUrl = `https://myflixproject-9c1001b14e61.herokuapp.com/users/${user.Username}`;
-
-            fetch(profileUrl, {
-                method: 'GET',
+        // If there is a stored token, fetch the user data using the token
+        if (storedToken) {
+            fetch(`https://myflixproject-9c1001b14e61.herokuapp.com/users/${Username}`, {
+                method: "GET",
                 headers: {
-                    Authorization: `Bearer ${user.token}`,
+                    Authorization: `Bearer ${storedToken}`,
                 },
             })
-                .then(response => {
-                    //debug
-                    console.log('undefined?', user.token);
+                .then((response) => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
                     return response.json();
                 })
-                .then(data => {
+                .then((data) => {
+                    console.log("User data:", data);
                     setUserData(data);
                 })
-                .catch(error => {
-                    console.error('Error fetching user data:', error);
+                .catch((error) => {
+                    console.error("Error fetching user data:", error.message);
                 });
-        } else {
-            console.log('User missing, cannot fetch user data.');
-            setUserData(null);
         }
-    }, [user]);
+    }, [Username]);
 
+
+    // If userData is still null, you can show a loading message or spinner
     if (!userData) {
         return <div>Loading...</div>;
     }
-
+    // renders ProfileView component
     return (
         <div>
-            <h2>User Profile</h2>
-            {userData ? (
-                <>
-                    <p>Username: {userData.Username}</p>
-                    <p>Email: {userData.Email}</p>
-                    {/* more info to come once this works */}
-                </>
-            ) : (
-                <p>User data not available.</p>
-            )}
+            <h2>{userData.Username}'s Profile</h2>
+            <div>
+                <strong>Username:</strong> {userData.Username}
+            </div>
+            <div>
+                <strong>Email:</strong> {userData.Email}
+            </div>
+            {/* will add more later*/}
         </div>
     );
 };
