@@ -30,7 +30,9 @@ MovieCard.propTypes = {
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string),
     ]).isRequired,
-    Director: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired,
+    Director: PropTypes.oneOfType([
+      PropTypes.string.isRequired,
+      PropTypes.arrayOf(PropTypes.string.isRequired)
+    ]).isRequired,
   }).isRequired
 };

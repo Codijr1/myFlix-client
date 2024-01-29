@@ -5,14 +5,12 @@ import PropTypes from 'prop-types';
 import './movie-view.scss';
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-
+import { propTypes } from "react-bootstrap/esm/Image";
 
 //formats and renders MovieView when a MovieCard is clicked
 export const MovieView = ({ movies }) => {
   const { movieId } = useParams();
-
   const movie = movies.find((m) => m._id === movieId)
-
   return (
     <div>
       <div>
@@ -44,15 +42,20 @@ export const MovieView = ({ movies }) => {
 
 //defines accpted data form
 MovieView.propTypes = {
-  movie: PropTypes.shape({
-    Title: PropTypes.string.isRequired,
-    Year: PropTypes.string.isRequired,
-    Description: PropTypes.string.isRequired,
-    Genre: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-    ]).isRequired,
-    Director: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired,
-  }).isRequired
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      Title: PropTypes.string.isRequired,
+      Year: PropTypes.string.isRequired,
+      Description: PropTypes.string.isRequired,
+      Genre: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.arrayOf(PropTypes.string),
+      ]).isRequired,
+      Director: PropTypes.oneOfType([
+        PropTypes.string.isRequired,
+        PropTypes.arrayOf(PropTypes.string.isRequired)
+      ]).isRequired,
+      _id: PropTypes.string
+    })
+  ).isRequired
 };
