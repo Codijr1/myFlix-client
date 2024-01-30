@@ -5,7 +5,7 @@ export const ProfileView = ({ user, token }) => {
 
     useEffect(() => {
         if (user && token) {
-            const profileUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com/users/';
+            const profileUrl = `https://myflixproject-9c1001b14e61.herokuapp.com/users/${user.Username}`;
             fetch(profileUrl, {
                 method: 'GET',
                 headers: {
@@ -40,8 +40,8 @@ export const ProfileView = ({ user, token }) => {
                     <p>Email: {userData.Email}</p>
                     {userData.favoriteMovies?.length > 0 ? (
                         <ul>
-                            {userData.favoriteMovies.map(movie => (
-                                <li key={movie._id}>{movie.Title}</li>
+                            {userData.favoriteMovies.map(movieId => (
+                                <li key={movieId}>{movieId}</li>
                             ))}
                         </ul>
                     ) : (

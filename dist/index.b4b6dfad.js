@@ -41886,7 +41886,7 @@ const ProfileView = ({ user, token })=>{
     const [userData, setUserData] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
         if (user && token) {
-            const profileUrl = "https://myflixproject-9c1001b14e61.herokuapp.com/users/";
+            const profileUrl = `https://myflixproject-9c1001b14e61.herokuapp.com/users/${user.Username}`;
             fetch(profileUrl, {
                 method: "GET",
                 headers: {
@@ -41944,9 +41944,9 @@ const ProfileView = ({ user, token })=>{
                         columnNumber: 21
                     }, undefined),
                     userData.favoriteMovies?.length > 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
-                        children: userData.favoriteMovies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                                children: movie.Title
-                            }, movie._id, false, {
+                        children: userData.favoriteMovies.map((movieId)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                                children: movieId
+                            }, movieId, false, {
                                 fileName: "src/components/profile-view/profile-view.jsx",
                                 lineNumber: 44,
                                 columnNumber: 33
