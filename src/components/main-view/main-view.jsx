@@ -12,6 +12,9 @@ import { NavigationBar } from "../navigation-bar/navigation-bar";
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
+  //debug
+  // console.log('Stored User:', storedUser);
+  // console.log('Stored Token:', storedToken);
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
@@ -42,7 +45,6 @@ export const MainView = () => {
           Director: movie.director,
           _id: movie._id,
         }));
-        // console.log('Transformed Movies:', moviesFromApi);
         setMovies(moviesFromApi);
       })
       .catch((error) => {
@@ -50,10 +52,10 @@ export const MainView = () => {
       });
   }, [token]);
 
-  //adding and removing favorites
+  //adding favorites
   const handleAddToFavorites = async (username, movieId) => {
     try {
-      const response = await fetch(`/users/${username}/movies/${movieId}`, {
+      const response = await fetch(`https://myflixproject-9c1001b14e61.herokuapp.com/users/${username}/movies/${movieId}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -61,15 +63,11 @@ export const MainView = () => {
       });
 
       const updatedUserData = await response.json();
-      setUser(updatedUserData); // Update the user state with the new data
+      setUser(updatedUserData);
     } catch (error) {
       console.error('Error adding movie to favorites:', error);
     }
   };
-
-  //debug
-  // console.log('Movies length:', movies.length);
-  // console.log('Movies data:', movies);
 
   return (
     <BrowserRouter>
@@ -105,6 +103,7 @@ export const MainView = () => {
                   <Col md={5}>
                     <LoginView
                       onLoggedIn={(user, token) => {
+                        console.log("Updated user state:", user, "and token state:", token);
                         setUser(user);
                         setToken(token);
                       }}
@@ -160,7 +159,7 @@ export const MainView = () => {
             element={
               <>
                 {user ? (
-                  <ProfileView user={user} />
+                  <ProfileView user={user} token={token} />
                 ) : (
                   <Navigate to="/login" />
                 )}
