@@ -16,6 +16,8 @@ export const MainView = () => {
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
 
+
+
   //renders the movie list if a user is logged in
   useEffect(() => {
     if (!token) {
@@ -48,6 +50,22 @@ export const MainView = () => {
       });
   }, [token]);
 
+  //adding and removing favorites
+  const handleAddToFavorites = async (username, movieId) => {
+    try {
+      const response = await fetch(`/users/${username}/movies/${movieId}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const updatedUserData = await response.json();
+      setUser(updatedUserData); // Update the user state with the new data
+    } catch (error) {
+      console.error('Error adding movie to favorites:', error);
+    }
+  };
 
   //debug
   // console.log('Movies length:', movies.length);
@@ -107,7 +125,7 @@ export const MainView = () => {
                   <Col>The list appears empty</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView movies={movies} />
+                    <MovieView movies={movies} user={user} onAddToFavorites={handleAddToFavorites} />
                   </Col>
                 )}
               </>

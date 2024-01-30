@@ -7,10 +7,19 @@ import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 
 //formats and renders MovieView when a MovieCard is clicked
-export const MovieView = ({ movies }) => {
+export const MovieView = ({ movies, user, onAddToFavorites }) => {
   const { _id } = useParams();
   const movie = movies.find((m) => m._id === _id);
+  const handleAddToFavorites = () => {
+    // Ensure a user is logged in before attempting to add to favorites
+    if (!user) {
+      alert('Please log in to add movies to favorites.');
+      return;
+    }
 
+    // Call the callback function to add the movie to favorites
+    onAddToFavorites(user.Username, _id);
+  };
   //debug
   // console.log('movieID', _id)
 
@@ -43,6 +52,7 @@ export const MovieView = ({ movies }) => {
             <span>Director:</span>
             <span>{Array.isArray(movie.Director) ? movie.Director.join(", ") : movie.Director}</span>
           </div>
+          <Button onClick={handleAddToFavorites}>Add this movie to my favorites</Button>
           <Link to={`/`}>
             <Button className="back-button" style={{ cursor: "pointer" }}>Back</Button>
           </Link>

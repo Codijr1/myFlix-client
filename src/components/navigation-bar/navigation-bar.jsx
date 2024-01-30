@@ -31,7 +31,6 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                                 </Nav.Link>
                                 <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
                             </>
-
                         )}
                     </Nav>
                 </Navbar.Collapse>

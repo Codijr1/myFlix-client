@@ -9,7 +9,7 @@ export const ProfileView = ({ user }) => {
         console.log('Fetching user data');
         if (user) {
             //debug
-            // console.log('User present', user);
+            console.log('User present', user);
             const profileUrl = 'https://myflixproject-9c1001b14e61.herokuapp.com/users/';
             fetch(profileUrl, {
                 method: 'GET',
@@ -25,7 +25,7 @@ export const ProfileView = ({ user }) => {
                 })
                 .then(data => {
                     //debug
-                    // console.log('Received user data from server:', data);
+                    console.log('Received user data from server:', data);
                     const loggedInUserId = user._id;
                     const loggedInUser = data.find(user => user._id === loggedInUserId);
 
@@ -52,6 +52,15 @@ export const ProfileView = ({ user }) => {
                 <>
                     <p>Username: {userData.Username}</p>
                     <p>Email: {userData.Email}</p>
+                    {userData.favoriteMovies.length > 0 ? (
+                        <ul>
+                            {userData.favoriteMovies.map(movie => (
+                                <li key={movie._id}>{movie.Title}</li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No favorite movies available.</p>
+                    )}
                     {/* more info to come once this works */}
                 </>
             ) : (
