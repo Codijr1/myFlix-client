@@ -11,13 +11,10 @@ export const MovieView = ({ movies, user, onAddToFavorites }) => {
   const { _id } = useParams();
   const movie = movies.find((m) => m._id === _id);
   const handleAddToFavorites = () => {
-    // Ensure a user is logged in before attempting to add to favorites
     if (!user) {
       alert('Please log in to add movies to favorites.');
       return;
     }
-
-    // Call the callback function to add the movie to favorites
     onAddToFavorites(user.Username, _id);
   };
   //debug

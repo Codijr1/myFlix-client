@@ -42,6 +42,7 @@ export const ProfileView = ({ user, token }) => {
                     Authorization: `Bearer ${token}`,
                 },
             });
+
             if (response.ok) {
                 const updatedUserData = await response.json();
                 setUserData(updatedUserData);
@@ -66,20 +67,13 @@ export const ProfileView = ({ user, token }) => {
                     <p>Email: {userData.Email}</p>
 
                     {userData.favoriteMovies?.length > 0 ? (
-
                         <Row>
-                            {userData.favoriteMovies?.length > 0 ? (
-                                <Row>
-                                    {userData.favoriteMovies.map(movieId => (
-                                        <Col key={movieId} md={6}>
-                                            <p>Movie ID: {movieId}</p>
-                                            <Button variant="danger" onClick={() => handleDeleteFromFavorites(movieId)}>Remove</Button>
-                                        </Col>
-                                    ))}
-                                </Row>
-                            ) : (
-                                <p>No favorite movies available.</p>
-                            )}
+                            {userData.favoriteMovies.map(movieId => (
+                                <Col key={movieId} md={6}>
+                                    <p>Movie ID: {movieId}</p>
+                                    <Button variant="danger" onClick={() => handleDeleteFromFavorites(movieId)}>Remove</Button>
+                                </Col>
+                            ))}
                         </Row>
                     ) : (
                         <p>No favorite movies available.</p>

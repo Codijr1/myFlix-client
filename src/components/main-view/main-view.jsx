@@ -20,8 +20,6 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-  const [successMessage, setSuccessMessage] = useState('');
-
 
   //renders the movie list if a user is logged in
   useEffect(() => {
@@ -81,22 +79,6 @@ export const MainView = () => {
     }
   };
 
-  //deleting from favorites
-  const handleDeleteFromFavorites = async (username, movieId) => {
-    try {
-      const response = await fetch(`https://myflixproject-9c1001b14e61.herokuapp.com/users/${username}/movies/${movieId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const updatedUserData = await response.json();
-      setUser(updatedUserData);
-    } catch (error) {
-      console.error('Error deleting movie to favorites:', error);
-    }
-  };
 
   return (
     <BrowserRouter>
@@ -107,7 +89,7 @@ export const MainView = () => {
           toast.dismiss();
         }}
       />
-      <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar />
+      <ToastContainer position="bottom-left" autoClose={3000} hideProgressBar />
       <Row className="justify-content-md-center">
         <Routes>
           {/* serves SignupView if no user is detected else MovieCard list*/}
