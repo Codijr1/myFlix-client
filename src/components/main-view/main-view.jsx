@@ -62,10 +62,33 @@ export const MainView = () => {
         },
       });
 
+      if (!response.ok) {
+        const errorResponse = await response.text();
+        console.error('Error adding movie to favorites:', errorResponse);
+        return;
+      }
+
       const updatedUserData = await response.json();
       setUser(updatedUserData);
     } catch (error) {
       console.error('Error adding movie to favorites:', error);
+    }
+  };
+
+  //deleting from favorites
+  const handleDeleteFromFavorites = async (username, movieId) => {
+    try {
+      const response = await fetch(`https://myflixproject-9c1001b14e61.herokuapp.com/users/${username}/movies/${movieId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const updatedUserData = await response.json();
+      setUser(updatedUserData);
+    } catch (error) {
+      console.error('Error deleting movie to favorites:', error);
     }
   };
 

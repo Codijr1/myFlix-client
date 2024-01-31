@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Button, Row, Col } from "react-bootstrap";
 
 export const ProfileView = ({ user, token }) => {
     const [userData, setUserData] = useState(null);
@@ -31,6 +32,26 @@ export const ProfileView = ({ user, token }) => {
         return <div>Loading...</div>;
     }
 
+    const handleDeleteFromFavorites = async (movieId) => {
+        try {
+            const response = await fetch(`https://myflixproject-9c1001b14e61.herokuapp.com/users/${user.Username}/movies/${movieId}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (response.ok) {
+                const updatedUserData = await response.json();
+                setUserData(updatedUserData);
+            } else {
+                console.error('Error deleting movie from favorites:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error deleting movie from favorites:', error);
+        }
+    };
+
+
     return (
         <div>
             <h2>User Profile</h2>
@@ -38,12 +59,23 @@ export const ProfileView = ({ user, token }) => {
                 <>
                     <p>Username: {userData.Username}</p>
                     <p>Email: {userData.Email}</p>
+
                     {userData.favoriteMovies?.length > 0 ? (
-                        <ul>
-                            {userData.favoriteMovies.map(movieId => (
-                                <li key={movieId}>{movieId}</li>
-                            ))}
-                        </ul>
+
+                        <Row>
+                            {userData.favoriteMovies?.length > 0 ? (
+                                <Row>
+                                    {userData.favoriteMovies.map(movieId => (
+                                        <Col key={movieId} md={6}>
+                                            <p>Movie ID: {movieId}</p>
+                                            <Button variant="danger" onClick={() => handleDeleteFromFavorites(movieId)}>Remove</Button>
+                                        </Col>
+                                    ))}
+                                </Row>
+                            ) : (
+                                <p>No favorite movies available.</p>
+                            )}
+                        </Row>
                     ) : (
                         <p>No favorite movies available.</p>
                     )}
@@ -53,4 +85,3 @@ export const ProfileView = ({ user, token }) => {
             )}
         </div>
     );
-};
