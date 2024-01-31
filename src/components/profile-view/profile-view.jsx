@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Button, Row, Col } from "react-bootstrap";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { MovieView } from '../movie-view/movie-view';
 
-export const ProfileView = ({ user, token }) => {
+export const ProfileView = ({ user, token, movies }) => {
     const [userData, setUserData] = useState(null);
+    const [favoriteMoviesData, setFavoriteMoviesData] = useState([]);
 
     useEffect(() => {
         if (user && token) {
@@ -65,15 +67,29 @@ export const ProfileView = ({ user, token }) => {
                 <>
                     <p>Username: {userData.Username}</p>
                     <p>Email: {userData.Email}</p>
-
                     {userData.favoriteMovies?.length > 0 ? (
                         <Row>
-                            {userData.favoriteMovies.map(movieId => (
-                                <Col key={movieId} md={6}>
-                                    <p>Movie ID: {movieId}</p>
-                                    <Button variant="danger" onClick={() => handleDeleteFromFavorites(movieId)}>Remove</Button>
-                                </Col>
-                            ))}
+                            {console.log("All Movies:", movies)}
+                            {console.log("Favorite Movie IDs:", userData.favoriteMovies)}
+                            {userData.favoriteMovies.map((movieId) => {
+                                const movie = movies.find((m) => m._id === movieId.toString()); // Convert movieId to string
+                                console.log("Current Movie:", movie);
+                                return (
+                                    <Col key={movieId} md={6}>
+                                        {movie ? (
+                                            <div>
+                                                <h4>{movie.Title} ({movie.Year})</h4>
+
+                                                <p><h6>Description: </h6>{movie.Description}</p>
+                                                <p><h6>Genre: </h6>{Array.isArray(movie.Genre) ? movie.Genre.join(", ") : movie.Genre}</p>
+                                                <Button variant="danger" onClick={() => handleDeleteFromFavorites(movieId)}>Remove</Button>
+                                            </div>
+                                        ) : (
+                                            <p>Movie not found</p>
+                                        )}
+                                    </Col>
+                                );
+                            })}
                         </Row>
                     ) : (
                         <p>No favorite movies available.</p>

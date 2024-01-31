@@ -172,8 +172,8 @@ export const MainView = () => {
             path="/users/profile"
             element={
               <>
-                {user ? (
-                  <ProfileView user={user} token={token} />
+                {user && movies ? (
+                  <ProfileView user={user} token={token} movies={movies} />
                 ) : (
                   <Navigate to="/login" />
                 )}
