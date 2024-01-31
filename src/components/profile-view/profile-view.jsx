@@ -62,26 +62,24 @@ export const ProfileView = ({ user, token, movies }) => {
 
     return (
         <div>
-            <h2>User Profile</h2>
+            <h2>{userData.Username}'s Info</h2>
             {userData ? (
                 <>
                     <p>Username: {userData.Username}</p>
                     <p>Email: {userData.Email}</p>
                     {userData.favoriteMovies?.length > 0 ? (
-                        <Row>
-                            {console.log("All Movies:", movies)}
-                            {console.log("Favorite Movie IDs:", userData.favoriteMovies)}
+                        <Row className="justify-content-md-center">
+                            <h2>{userData.Username}'s Favorite Movies</h2>
                             {userData.favoriteMovies.map((movieId) => {
-                                const movie = movies.find((m) => m._id === movieId.toString()); // Convert movieId to string
+                                const movie = movies.find((m) => m._id === movieId.toString());
                                 console.log("Current Movie:", movie);
                                 return (
-                                    <Col key={movieId} md={6}>
+                                    <Col sm="8" lg="4" key={movieId} md={6}>
                                         {movie ? (
                                             <div>
                                                 <h4>{movie.Title} ({movie.Year})</h4>
-
                                                 <p><h6>Description: </h6>{movie.Description}</p>
-                                                <p><h6>Genre: </h6>{Array.isArray(movie.Genre) ? movie.Genre.join(", ") : movie.Genre}</p>
+                                                <p><h6>Genre(s): </h6>{Array.isArray(movie.Genre) ? movie.Genre.join(", ") : movie.Genre}</p>
                                                 <Button variant="danger" onClick={() => handleDeleteFromFavorites(movieId)}>Remove</Button>
                                             </div>
                                         ) : (
@@ -92,7 +90,7 @@ export const ProfileView = ({ user, token, movies }) => {
                             })}
                         </Row>
                     ) : (
-                        <p>No favorite movies available.</p>
+                        <h4>Your favorites go here, try adding some and returning</h4>
                     )}
                 </>
             ) : (

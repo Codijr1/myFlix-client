@@ -41965,8 +41965,11 @@ const ProfileView = ({ user, token, movies })=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                children: "User Profile"
-            }, void 0, false, {
+                children: [
+                    userData.Username,
+                    "'s Info"
+                ]
+            }, void 0, true, {
                 fileName: "src/components/profile-view/profile-view.jsx",
                 lineNumber: 65,
                 columnNumber: 13
@@ -41994,13 +41997,24 @@ const ProfileView = ({ user, token, movies })=>{
                         columnNumber: 21
                     }, undefined),
                     userData.favoriteMovies?.length > 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Row), {
+                        className: "justify-content-md-center",
                         children: [
-                            console.log("All Movies:", movies),
-                            console.log("Favorite Movie IDs:", userData.favoriteMovies),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                                children: [
+                                    userData.Username,
+                                    "'s Favorite Movies"
+                                ]
+                            }, void 0, true, {
+                                fileName: "src/components/profile-view/profile-view.jsx",
+                                lineNumber: 72,
+                                columnNumber: 29
+                            }, undefined),
                             userData.favoriteMovies.map((movieId)=>{
-                                const movie = movies.find((m)=>m._id === movieId.toString()); // Convert movieId to string
+                                const movie = movies.find((m)=>m._id === movieId.toString());
                                 console.log("Current Movie:", movie);
                                 return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                                    sm: "8",
+                                    lg: "4",
                                     md: 6,
                                     children: movie ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                         children: [
@@ -42013,7 +42027,7 @@ const ProfileView = ({ user, token, movies })=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 81,
+                                                lineNumber: 80,
                                                 columnNumber: 49
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -42022,30 +42036,30 @@ const ProfileView = ({ user, token, movies })=>{
                                                         children: "Description: "
                                                     }, void 0, false, {
                                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                                        lineNumber: 83,
+                                                        lineNumber: 81,
                                                         columnNumber: 52
                                                     }, undefined),
                                                     movie.Description
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 83,
+                                                lineNumber: 81,
                                                 columnNumber: 49
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                                                 children: [
                                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h6", {
-                                                        children: "Genre: "
+                                                        children: "Genre(s): "
                                                     }, void 0, false, {
                                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                                        lineNumber: 84,
+                                                        lineNumber: 82,
                                                         columnNumber: 52
                                                     }, undefined),
                                                     Array.isArray(movie.Genre) ? movie.Genre.join(", ") : movie.Genre
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 84,
+                                                lineNumber: 82,
                                                 columnNumber: 49
                                             }, undefined),
                                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
@@ -42054,24 +42068,24 @@ const ProfileView = ({ user, token, movies })=>{
                                                 children: "Remove"
                                             }, void 0, false, {
                                                 fileName: "src/components/profile-view/profile-view.jsx",
-                                                lineNumber: 85,
+                                                lineNumber: 83,
                                                 columnNumber: 49
                                             }, undefined)
                                         ]
                                     }, void 0, true, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 80,
+                                        lineNumber: 79,
                                         columnNumber: 45
                                     }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
                                         children: "Movie not found"
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-view.jsx",
-                                        lineNumber: 88,
+                                        lineNumber: 86,
                                         columnNumber: 45
                                     }, undefined)
                                 }, movieId, false, {
                                     fileName: "src/components/profile-view/profile-view.jsx",
-                                    lineNumber: 78,
+                                    lineNumber: 77,
                                     columnNumber: 37
                                 }, undefined);
                             })
@@ -42080,11 +42094,11 @@ const ProfileView = ({ user, token, movies })=>{
                         fileName: "src/components/profile-view/profile-view.jsx",
                         lineNumber: 71,
                         columnNumber: 25
-                    }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                        children: "No favorite movies available."
+                    }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h4", {
+                        children: "Your favorites go here, try adding some and returning"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-view.jsx",
-                        lineNumber: 95,
+                        lineNumber: 93,
                         columnNumber: 25
                     }, undefined)
                 ]
@@ -42092,7 +42106,7 @@ const ProfileView = ({ user, token, movies })=>{
                 children: "User data not available."
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-view.jsx",
-                lineNumber: 99,
+                lineNumber: 97,
                 columnNumber: 17
             }, undefined)
         ]
