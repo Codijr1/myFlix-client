@@ -25,14 +25,16 @@ export const LoginView = ({ onLoggedIn }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Login response: ", data);
+        //debug
+        // console.log("Login response: ", data);
         if (data.user && data.token) {
           // Store user and token in local storage
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
 
           // Trigger the onLoggedIn callback with user and token
-          console.log("Logging in with user and token:", data.user, data.token);
+          //debug
+          // console.log("Logging in with user and token:", data.user, data.token);
           onLoggedIn(data.user, data.token);
         } else {
           alert("User Not Found");

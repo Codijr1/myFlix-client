@@ -136,7 +136,6 @@ export const MainView = () => {
                   <Col md={5}>
                     <LoginView
                       onLoggedIn={(user, token) => {
-                        console.log("Updated user state:", user, "and token state:", token);
                         setUser(user);
                         setToken(token);
                       }}

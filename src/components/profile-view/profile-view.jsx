@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Row, Col } from "react-bootstrap";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const ProfileView = ({ user, token }) => {
     const [userData, setUserData] = useState(null);
@@ -43,11 +45,14 @@ export const ProfileView = ({ user, token }) => {
             if (response.ok) {
                 const updatedUserData = await response.json();
                 setUserData(updatedUserData);
+                toast.success('Movie removed from favorites');
             } else {
                 console.error('Error deleting movie from favorites:', response.statusText);
+                toast.error('Error removing movie from favorites');
             }
         } catch (error) {
             console.error('Error deleting movie from favorites:', error);
+            toast.error('Error removing movie from favorites');
         }
     };
 
