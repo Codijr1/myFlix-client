@@ -84,4 +84,5 @@ export const ProfileView = ({ user, token }) => {
                 <p>User data not available.</p>
             )}
         </div>
-    );
+    )
+};

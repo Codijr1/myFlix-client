@@ -1,5 +1,7 @@
 //imports
 import { useState, useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
@@ -18,7 +20,7 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-
+  const [successMessage, setSuccessMessage] = useState('');
 
 
   //renders the movie list if a user is logged in
@@ -55,21 +57,25 @@ export const MainView = () => {
   //adding favorites
   const handleAddToFavorites = async (username, movieId) => {
     try {
+      if (user.favoriteMovies.includes(movieId)) {
+        toast.info('This movie is already in your favorites');
+        return;
+      }
+
       const response = await fetch(`https://myflixproject-9c1001b14e61.herokuapp.com/users/${username}/movies/${movieId}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
       if (!response.ok) {
         const errorResponse = await response.text();
         console.error('Error adding movie to favorites:', errorResponse);
         return;
       }
-
       const updatedUserData = await response.json();
       setUser(updatedUserData);
+      toast.success('Added to your favorites')
     } catch (error) {
       console.error('Error adding movie to favorites:', error);
     }
@@ -96,8 +102,12 @@ export const MainView = () => {
     <BrowserRouter>
       <NavigationBar
         user={user}
-        onLoggedOut={() => setUser(null)}
+        onLoggedOut={() => {
+          setUser(null);
+          toast.dismiss();
+        }}
       />
+      <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar />
       <Row className="justify-content-md-center">
         <Routes>
           {/* serves SignupView if no user is detected else MovieCard list*/}
