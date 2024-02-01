@@ -40,10 +40,8 @@ export const SignupView = ({ onLoggedIn }) => {
       const jsonData = JSON.parse(responseData);
 
       if (response.ok) {
-        // Signup successful
+        //if success log in
         toast.success("Signup Successful", 3000);
-
-        // Log in the user
         loginUser(username, password);
       } else {
         console.error("Server response error:", jsonData);
@@ -72,7 +70,6 @@ export const SignupView = ({ onLoggedIn }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.user && data.token) {
-          // Call the onLoggedIn prop to notify MainView about the successful login
           onLoggedIn(data.user, data.token);
         } else {
           toast.error("User Not Found");
@@ -80,7 +77,6 @@ export const SignupView = ({ onLoggedIn }) => {
       })
       .catch((error) => {
         console.error("Error during login:", error);
-
         if (
           error instanceof TypeError &&
           error.message === "Failed to fetch"

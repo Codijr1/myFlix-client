@@ -27570,7 +27570,12 @@ const MainView = ()=>{
                             element: user && movies ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _profileView.ProfileView), {
                                 user: user,
                                 token: token,
-                                movies: movies
+                                movies: movies,
+                                onLoggedOut: ()=>{
+                                    setUser(null);
+                                    setToken(null);
+                                    (0, _reactToastify.toast).dismiss();
+                                }
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
                                 lineNumber: 166,
@@ -27579,7 +27584,7 @@ const MainView = ()=>{
                                 to: "/login"
                             }, void 0, false, {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 168,
+                                lineNumber: 177,
                                 columnNumber: 17
                             }, void 0)
                         }, void 0, false, {
@@ -42636,9 +42641,8 @@ const SignupView = ({ onLoggedIn })=>{
             const responseData = await response.text();
             const jsonData = JSON.parse(responseData);
             if (response.ok) {
-                // Signup successful
+                //if success log in
                 (0, _reactToastify.toast).success("Signup Successful", 3000);
-                // Log in the user
                 loginUser(username, password);
             } else {
                 console.error("Server response error:", jsonData);
@@ -42660,8 +42664,7 @@ const SignupView = ({ onLoggedIn })=>{
                 Password: password
             })
         }).then((response)=>response.json()).then((data)=>{
-            if (data.user && data.token) // Call the onLoggedIn prop to notify MainView about the successful login
-            onLoggedIn(data.user, data.token);
+            if (data.user && data.token) onLoggedIn(data.user, data.token);
             else (0, _reactToastify.toast).error("User Not Found");
         }).catch((error)=>{
             console.error("Error during login:", error);
@@ -42679,7 +42682,7 @@ const SignupView = ({ onLoggedIn })=>{
                         children: "Username:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 101,
+                        lineNumber: 97,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -42690,13 +42693,13 @@ const SignupView = ({ onLoggedIn })=>{
                         minLength: "3"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 102,
+                        lineNumber: 98,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 100,
+                lineNumber: 96,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -42705,7 +42708,7 @@ const SignupView = ({ onLoggedIn })=>{
                         children: "Password:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 112,
+                        lineNumber: 108,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -42715,13 +42718,13 @@ const SignupView = ({ onLoggedIn })=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 113,
+                        lineNumber: 109,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 111,
+                lineNumber: 107,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -42730,7 +42733,7 @@ const SignupView = ({ onLoggedIn })=>{
                         children: "Email:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 122,
+                        lineNumber: 118,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -42740,13 +42743,13 @@ const SignupView = ({ onLoggedIn })=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 123,
+                        lineNumber: 119,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 121,
+                lineNumber: 117,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -42755,7 +42758,7 @@ const SignupView = ({ onLoggedIn })=>{
                         children: "Last Name:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 132,
+                        lineNumber: 128,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -42765,13 +42768,13 @@ const SignupView = ({ onLoggedIn })=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 133,
+                        lineNumber: 129,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 131,
+                lineNumber: 127,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -42780,7 +42783,7 @@ const SignupView = ({ onLoggedIn })=>{
                         children: "First Name:"
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 142,
+                        lineNumber: 138,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -42790,13 +42793,13 @@ const SignupView = ({ onLoggedIn })=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/signup-view/signup-view.jsx",
-                        lineNumber: 143,
+                        lineNumber: 139,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 141,
+                lineNumber: 137,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
@@ -42805,7 +42808,7 @@ const SignupView = ({ onLoggedIn })=>{
                 children: "Sign Up"
             }, void 0, false, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 150,
+                lineNumber: 146,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
@@ -42814,13 +42817,13 @@ const SignupView = ({ onLoggedIn })=>{
                 children: "Existing Users Login"
             }, void 0, false, {
                 fileName: "src/components/signup-view/signup-view.jsx",
-                lineNumber: 153,
+                lineNumber: 149,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/signup-view/signup-view.jsx",
-        lineNumber: 99,
+        lineNumber: 95,
         columnNumber: 5
     }, undefined);
 };
@@ -42857,7 +42860,7 @@ var _reactToastifyCss = require("react-toastify/dist/ReactToastify.css");
 var _updateProfileModal = require("./update-profile-modal");
 var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
-const ProfileView = ({ user, token, movies })=>{
+const ProfileView = ({ user, token, movies, onLoggedOut })=>{
     _s();
     const [userData, setUserData] = (0, _react.useState)(null);
     const [showModal, setShowModal] = (0, _react.useState)(false);
@@ -42945,7 +42948,7 @@ const ProfileView = ({ user, token, movies })=>{
             if (response.ok) {
                 (0, _reactToastify.toast).success("Account deleted successfully");
                 navigate("/signup");
-                onLoggedout();
+                if (onLoggedOut) onLoggedOut();
             } else {
                 console.error("Error deleting user:", response.statusText);
                 (0, _reactToastify.toast).error("Error, deletion failed");

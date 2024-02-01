@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { UpdateProfileForm } from './update-profile-modal';
 import { useNavigate } from 'react-router-dom';
 
-export const ProfileView = ({ user, token, movies }) => {
+export const ProfileView = ({ user, token, movies, onLoggedOut }) => {
     const [userData, setUserData] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
@@ -94,12 +94,12 @@ export const ProfileView = ({ user, token, movies }) => {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            });
-
-            if (response.ok) {
+            }); if (response.ok) {
                 toast.success('Account deleted successfully');
                 navigate('/signup');
-                onLoggedout();
+                if (onLoggedOut) {
+                    onLoggedOut();
+                }
             } else {
                 console.error('Error deleting user:', response.statusText);
                 toast.error('Error, deletion failed');

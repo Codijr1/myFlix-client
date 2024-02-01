@@ -163,7 +163,16 @@ export const MainView = () => {
             path="/users/profile"
             element={
               user && movies ? (
-                <ProfileView user={user} token={token} movies={movies} />
+                <ProfileView
+                  user={user}
+                  token={token}
+                  movies={movies}
+                  onLoggedOut={() => {
+                    setUser(null);
+                    setToken(null);
+                    toast.dismiss();
+                  }}
+                />
               ) : (
                 <Navigate to="/login" />
               )
