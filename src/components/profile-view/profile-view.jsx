@@ -1,12 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Row, Col } from "react-bootstrap";
+import { Button, Row, Col, Modal, Form } from "react-bootstrap";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { MovieView } from '../movie-view/movie-view';
+import { UpdateProfileForm } from './update-profile-modal';
 
 export const ProfileView = ({ user, token, movies }) => {
     const [userData, setUserData] = useState(null);
-    const [favoriteMoviesData, setFavoriteMoviesData] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const handleShowModal = () => {
+        setShowModal(true);
+    };
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+    const [newFirstName, setNewFirstName] = useState('');
+    const [newLastName, setNewLastName] = useState('');
+    const [newUsername, setNewUsername] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [newEmail, setNewEmail] = useState('');
 
     useEffect(() => {
         if (user && token) {
@@ -14,23 +25,52 @@ export const ProfileView = ({ user, token, movies }) => {
             fetch(profileUrl, {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
                 },
             })
-                .then(response => {
+                .then((response) => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! Status: ${response.status}`);
                     }
                     return response.json();
                 })
-                .then(data => {
+                .then((data) => {
                     setUserData(data);
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.error('Error fetching user data:', error);
                 });
         }
     }, [user, token]);
+    const handleUpdateProfile = async ({ newFirstName, newLastName, newUsername, newPassword, newEmail }) => {
+        try {
+            const response = await fetch(`https://myflixproject-9c1001b14e61.herokuapp.com/users/${user.Username}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    FirstName: newFirstName,
+                    LastName: newLastName,
+                    Username: newUsername,
+                    Password: newPassword,
+                    Email: newEmail
+                }),
+            });
+
+            if (response.ok) {
+                const updatedUserData = await response.json();
+                setUserData(updatedUserData);
+                console.log('Profile updated successfully');
+            } else {
+                console.error('Error updating profile:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
+    };
+
 
     if (!userData) {
         return <div>Loading...</div>;
@@ -67,12 +107,14 @@ export const ProfileView = ({ user, token, movies }) => {
                 <>
                     <p>Username: {userData.Username}</p>
                     <p>Email: {userData.Email}</p>
+                    <Button variant="primary" onClick={() => setShowModal(true)}>
+                        Update Info
+                    </Button>
                     {userData.favoriteMovies?.length > 0 ? (
-                        <Row className="justify-content-md-center">
+                        <Row >
                             <h2>{userData.Username}'s Favorite Movies</h2>
                             {userData.favoriteMovies.map((movieId) => {
                                 const movie = movies.find((m) => m._id === movieId.toString());
-                                console.log("Current Movie:", movie);
                                 return (
                                     <Col sm="8" lg="4" key={movieId} md={6}>
                                         {movie ? (
@@ -96,6 +138,21 @@ export const ProfileView = ({ user, token, movies }) => {
             ) : (
                 <p>User data not available.</p>
             )}
+            <UpdateProfileForm
+                show={showModal}
+                handleClose={handleCloseModal}
+                onUpdateProfile={handleUpdateProfile}
+                newFirstName={newFirstName}
+                newLastName={newLastName}
+                newUsername={newUsername}
+                newPassword={newPassword}
+                newEmail={newEmail}
+                setNewFirstName={setNewFirstName}
+                setNewLastName={setNewLastName}
+                setNewUsername={setNewUsername}
+                setNewPassword={setNewPassword}
+                setNewEmail={setNewEmail}
+            />
         </div>
     )
 };
