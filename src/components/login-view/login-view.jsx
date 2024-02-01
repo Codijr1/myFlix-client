@@ -1,15 +1,18 @@
 // imports
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // LoginView component
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("Username");
   const [password, setPassword] = useState("Password");
-
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    navigate('/signup');
     const data = {
       Username: username,
       Password: password,
@@ -31,13 +34,9 @@ export const LoginView = ({ onLoggedIn }) => {
           // Store user and token in local storage
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
-
-          // Trigger the onLoggedIn callback with user and token
-          //debug
-          // console.log("Logging in with user and token:", data.user, data.token);
           onLoggedIn(data.user, data.token);
         } else {
-          alert("User Not Found");
+          toast.error("User Not Found");
         }
       })
       .catch((error) => {
@@ -51,7 +50,7 @@ export const LoginView = ({ onLoggedIn }) => {
             "Failed to connect to the server. Please try again later."
           );
         } else {
-          alert(
+          toast.error(
             "Login failed. Please check your credentials and try again."
           );
         }
@@ -81,7 +80,10 @@ export const LoginView = ({ onLoggedIn }) => {
         />
       </Form.Group>
       <Button variant="primary" type="submit">
-        Submit
+        Login
+      </Button>
+      <Button variant="secondary" onClick={() => navigate('/signup')}>
+        Sign Up
       </Button>
     </Form>
   );

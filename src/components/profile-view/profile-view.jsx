@@ -3,21 +3,30 @@ import { Button, Row, Col, Modal, Form } from "react-bootstrap";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { UpdateProfileForm } from './update-profile-modal';
+import { useNavigate } from 'react-router-dom';
 
 export const ProfileView = ({ user, token, movies }) => {
     const [userData, setUserData] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
     const handleShowModal = () => {
         setShowModal(true);
     };
     const handleCloseModal = () => {
         setShowModal(false);
     };
+    const handleShowDeleteConfirmationModal = () => {
+        setShowDeleteConfirmationModal(true);
+    };
+    const handleCloseDeleteConfirmationModal = () => {
+        setShowDeleteConfirmationModal(false);
+    };
     const [newFirstName, setNewFirstName] = useState('');
     const [newLastName, setNewLastName] = useState('');
     const [newUsername, setNewUsername] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [newEmail, setNewEmail] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (user && token) {
@@ -78,10 +87,29 @@ export const ProfileView = ({ user, token, movies }) => {
         }
     };
 
+    const handleDeleteUser = async () => {
+        try {
+            const response = await fetch(`https://myflixproject-9c1001b14e61.herokuapp.com/users/${user.Username}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
 
-    if (!userData) {
-        return <div>Loading...</div>;
-    }
+            if (response.ok) {
+                toast.success('Account deleted successfully');
+                navigate('/signup');
+                onLoggedout();
+            } else {
+                console.error('Error deleting user:', response.statusText);
+                toast.error('Error, deletion failed');
+            }
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            toast.error('An unexpected error occurred while deleting user');
+        }
+    };
+
 
     const handleDeleteFromFavorites = async (movieId) => {
         try {
@@ -106,6 +134,9 @@ export const ProfileView = ({ user, token, movies }) => {
         }
     };
 
+    if (!userData) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div>
@@ -117,6 +148,25 @@ export const ProfileView = ({ user, token, movies }) => {
                     <Button variant="primary" onClick={() => setShowModal(true)}>
                         Update Info
                     </Button>
+                    <Button variant="danger" onClick={handleShowDeleteConfirmationModal}>
+                        Delete Account
+                    </Button>
+                    <Modal show={showDeleteConfirmationModal} onHide={handleCloseDeleteConfirmationModal}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Confirm Deletion</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            Are you sure you want to delete your account? This action cannot be undone.
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleCloseDeleteConfirmationModal}>
+                                Cancel
+                            </Button>
+                            <Button variant="danger" onClick={handleDeleteUser}>
+                                Confirm
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
                     {userData.favoriteMovies?.length > 0 ? (
                         <Row >
                             <h2>{userData.Username}'s Favorite Movies</h2>

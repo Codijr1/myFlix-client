@@ -79,7 +79,6 @@ export const MainView = () => {
     }
   };
 
-
   return (
     <BrowserRouter>
       <NavigationBar
@@ -92,92 +91,67 @@ export const MainView = () => {
       <ToastContainer position="bottom-left" autoClose={3000} hideProgressBar />
       <Row className="justify-content-md-center">
         <Routes>
-          {/* serves SignupView if no user is detected else MovieCard list*/}
           <Route
             path="/signup"
             element={
-              <>
-                {user ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Col md={5}>
-                    <SignupView />
-                  </Col>
-                )}
-              </>
+              <Col md={5}>
+                {user ? <Navigate to="/" /> : <SignupView />}
+              </Col>
             }
           />
-          {/* serves LoginView if user is not detected else MovieCard list */}
           <Route
             path="/login"
             element={
-              <>
-                {user ? (
-                  <Navigate to="/" />
-                ) : (
-                  <Col md={5}>
-                    <LoginView
-                      onLoggedIn={(user, token) => {
-                        setUser(user);
-                        setToken(token);
-                      }}
-                    />
-                  </Col>
-                )}
-              </>
+              <Col md={5}>
+                {user ? <Navigate to="/" /> : <LoginView onLoggedIn={(user, token) => {
+                  setUser(user);
+                  setToken(token);
+                }} />}
+              </Col>
             }
           />
-          {/* serves MovieView if MovieCard is clicked and user detected else LoginView*/}
           <Route
             path="/movies/:_id"
             element={
-              <>
-                {!user ? (
-                  <Navigate to="/login" replace />
-                ) : movies.length === 0 ? (
-                  <Col>The list appears empty</Col>
-                ) : (
-                  <Col md={8}>
-                    <MovieView movies={movies} user={user} onAddToFavorites={handleAddToFavorites} />
-                  </Col>
-                )}
-              </>
+              !user ? (
+                <Navigate to="/login" replace />
+              ) : movies.length === 0 ? (
+                <Col>The list appears empty</Col>
+              ) : (
+                <Col md={8}>
+                  <MovieView movies={movies} user={user} onAddToFavorites={handleAddToFavorites} />
+                </Col>
+              )
             }
           />
-          {/* serves MovieCard list unless lists cannot be populated */}
           <Route
             path="/"
             element={
-              <>
-                {!user ? (
-                  <Navigate to="/login" replace />
-                ) : movies.length === 0 ? (
-                  <Col>Loading...</Col>
-                ) : (
-                  <>
-                    {movies.map((movie) => (
-                      <Col md={6} lg={4} xl={3} className="mb-5 col-8" key={movie._id}>
-                        <Link to={`/movies/${movie._id}`}>
-                          <MovieCard movieData={movie} />
-                        </Link>
-                      </Col>
-                    ))}
-                  </>
-                )}
-              </>
+              !user ? (
+                <Navigate to="/login" replace />
+              ) : movies.length === 0 ? (
+                <Col>Loading...</Col>
+              ) : (
+                <>
+                  {movies.map((movie) => (
+                    <Col md={6} lg={4} xl={3} className="mb-5 col-8" key={movie._id}>
+                      <Link to={`/movies/${movie._id}`}>
+                        <MovieCard movieData={movie} />
+                      </Link>
+                    </Col>
+                  ))}
+                </>
+              )
             }
           />
-          {/* serves profile view if user detected else login view */}
           <Route
             path="/users/profile"
             element={
-              <>
-                {user && movies ? (
-                  <ProfileView user={user} token={token} movies={movies} />
-                ) : (
-                  <Navigate to="/login" />
-                )}
-              </>
+              user && movies ? (
+                <ProfileView user={user} token={token} movies={movies} />
+              ) : (
+                <Navigate to="/login" />
+              )
             }
           />
         </Routes>

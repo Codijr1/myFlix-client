@@ -1,16 +1,19 @@
 //imports
 import { useState } from "react";
-import {Form,Button} from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 //hooks
 export const SignupView = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [firstName, setFirstName] = useState("");
+  //hardcoded for testing
+  const [username, setUsername] = useState("Username");
+  const [password, setPassword] = useState("Password");
+  const [email, setEmail] = useState("email@gmail.com");
+  const [lastName, setLastName] = useState("Last");
+  const [firstName, setFirstName] = useState("First");
+  const navigate = useNavigate();
 
-  //defines data structure
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
@@ -21,7 +24,7 @@ export const SignupView = () => {
       FirstName: firstName
     };
 
-    //sends POST request to API to create a new user
+    // sends POST request to API to create a new user
     fetch("https://myflixproject-9c1001b14e61.herokuapp.com/signup", {
       method: "POST",
       body: JSON.stringify(data),
@@ -29,21 +32,25 @@ export const SignupView = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => {
-        if (response.ok) {
-          alert("Signup Successful");
-          window.location.reload();
-        } else {
-          response.json().then((data) => {
-            console.error("Signup failed:", data);
-          });
-
-          alert("Signup failed. Please check the console for details.");
+      .then(async (response) => {
+        const responseData = await response.text();
+        try {
+          const jsonData = JSON.parse(responseData);
+          if (response.ok) {
+            toast.success("Signup Successful", 3000);
+            navigate('/');
+          } else {
+            console.error('Server response error:', jsonData);
+            throw new Error(jsonData.error || 'Signup failed');
+          }
+        } catch (error) {
+          console.error("Error during signup:", error);
+          toast.error(`Signup failed. ${error.message}`, 3000);
         }
       })
       .catch((error) => {
         console.error("Error during signup:", error);
-        alert("Something went wrong during signup");
+        toast.error(`Signup failed. ${error.message}`, 3000);
       });
   };
 
@@ -83,25 +90,28 @@ export const SignupView = () => {
 
       <Form.Group>
         <Form.Label>Last Name:</Form.Label>
-          <Form.Control
-            type="text"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
+        <Form.Control
+          type="text"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+        />
       </Form.Group>
 
       <Form.Group>
         <Form.Label>First Name:</Form.Label>
-          <Form.Control
-            type="text"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            required
-          />
+        <Form.Control
+          type="text"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+        />
       </Form.Group>
       <Button type="submit" variant="primary">
-        Submit
+        Sign Up
+      </Button>
+      <Button variant="secondary" onClick={() => navigate('/login')}>
+        Existing Users Login
       </Button>
     </Form>
   );
