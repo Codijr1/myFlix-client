@@ -25,16 +25,16 @@ export const UpdateProfileForm = ({ show, onUpdateProfile, handleClose, newFirst
                         <Form.Label>New First Name</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Enter new first name"
+                            placeholder=". . ."
                             value={newFirstName}
                             onChange={(e) => setNewFirstName(e.target.value)}
                         />
                     </Form.Group>
-                    <Form.Group controlId="formNewLastName">
+                    <Form.Group controlId=". . .">
                         <Form.Label>New Last Name</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Enter new last name"
+                            placeholder=". . ."
                             value={newLastName}
                             onChange={(e) => setNewLastName(e.target.value)}
                         />
@@ -43,7 +43,7 @@ export const UpdateProfileForm = ({ show, onUpdateProfile, handleClose, newFirst
                         <Form.Label>New Username</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Enter new username"
+                            placeholder=". . ."
                             value={newUsername}
                             onChange={(e) => setNewUsername(e.target.value)}
                         />
@@ -52,7 +52,7 @@ export const UpdateProfileForm = ({ show, onUpdateProfile, handleClose, newFirst
                         <Form.Label>New Password</Form.Label>
                         <Form.Control
                             type="password"
-                            placeholder="Enter new password"
+                            placeholder=". . ."
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                         />
@@ -61,7 +61,7 @@ export const UpdateProfileForm = ({ show, onUpdateProfile, handleClose, newFirst
                         <Form.Label>New Email</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Enter new email"
+                            placeholder=". . ."
                             value={newEmail}
                             onChange={(e) => setNewEmail(e.target.value)}
                         />

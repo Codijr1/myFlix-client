@@ -42,7 +42,12 @@ export const ProfileView = ({ user, token, movies }) => {
                 });
         }
     }, [user, token]);
+
     const handleUpdateProfile = async ({ newFirstName, newLastName, newUsername, newPassword, newEmail }) => {
+        if (!newFirstName || !newLastName || !newUsername || !newPassword || !newEmail) {
+            toast.error('Please fill in all fields.');
+            return;
+        }
         try {
             const response = await fetch(`https://myflixproject-9c1001b14e61.herokuapp.com/users/${user.Username}`, {
                 method: 'PUT',
@@ -62,12 +67,14 @@ export const ProfileView = ({ user, token, movies }) => {
             if (response.ok) {
                 const updatedUserData = await response.json();
                 setUserData(updatedUserData);
-                console.log('Profile updated successfully');
+                toast.success('Update Successful');
             } else {
                 console.error('Error updating profile:', response.statusText);
+                toast.error('Error, update failed');
             }
         } catch (error) {
             console.error('Error updating profile:', error);
+            toast.error('An unexpected error occurred while updating profile');
         }
     };
 
