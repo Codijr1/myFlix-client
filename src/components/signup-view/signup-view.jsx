@@ -39,18 +39,19 @@ export const SignupView = () => {
           if (response.ok) {
             toast.success("Signup Successful", 3000);
             navigate('/');
+            console.log('Redirect failed')
           } else {
             console.error('Server response error:', jsonData);
             throw new Error(jsonData.error || 'Signup failed');
           }
         } catch (error) {
           console.error("Error during signup:", error);
-          toast.error(`Signup failed. ${error.message}`, 3000);
+          toast.error(`Signup failed, User already exists or input form is invalid`, 3000);
         }
       })
       .catch((error) => {
         console.error("Error during signup:", error);
-        toast.error(`Signup failed. ${error.message}`, 3000);
+        toast.error(`Signup failed. Signup failed, User already exists or input form is invalid`, 3000);
       });
   };
 
