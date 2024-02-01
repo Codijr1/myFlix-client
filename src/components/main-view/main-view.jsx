@@ -23,7 +23,6 @@ export const MainView = () => {
 
   //open modal
   const handleOpenModal = (movie) => {
-    console.log('Selected Movie:', movie);
     setSelectedMovie(movie);
     setShowModal(true);
   };
@@ -144,7 +143,7 @@ export const MainView = () => {
               !user ? (
                 <Navigate to="/login" replace />
               ) : movies.length === 0 ? (
-                <Col>The list appears empty</Col>
+                <Col>Loading...</Col>
               ) : (
                 <Col md={8}>
                   <MovieView movies={movies} user={user} onAddToFavorites={handleAddToFavorites} />
@@ -158,7 +157,7 @@ export const MainView = () => {
               !user ? (
                 <Navigate to="/login" replace />
               ) : movies.length === 0 ? (
-                <Col>The list appears empty</Col>
+                <Col>Loading...</Col>
               ) : (
                 <>
                   {movies.map((movie) => (
@@ -170,26 +169,6 @@ export const MainView = () => {
               )
             }
           />
-          {/* <Route
-            path="/"
-            element={
-              !user ? (
-                <Navigate to="/login" replace />
-              ) : movies.length === 0 ? (
-                <Col>Loading...</Col>
-              ) : (
-                <>
-                  {movies.map((movie) => (
-                    <Col md={6} lg={4} xl={3} className="mb-5 col-8" key={movie._id}>
-                      <Link to={`/movies/${movie._id}`}>
-                        <MovieCard movieData={movie} />
-                      </Link>
-                    </Col>
-                  ))}
-                </>
-              )
-            }
-          /> */}
           <Route
             path="/users/profile"
             element={
@@ -211,7 +190,13 @@ export const MainView = () => {
           />
         </Routes>
       </Row>
-      <MovieModal show={showModal} handleClose={handleCloseModal} movieData={selectedMovie} />
+      <MovieModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        movieData={selectedMovie}
+        onAddToFavorites={handleAddToFavorites}
+        user={user}
+      />
     </BrowserRouter>
   );
 };

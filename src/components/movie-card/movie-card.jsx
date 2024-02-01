@@ -5,12 +5,9 @@ import './movie-card.scss';
 
 //renders the MovieCard component
 export const MovieCard = ({ movieData, onCardClick }) => {
-  const handleClick = () => {
-    console.log('Card clicked');
-    onCardClick();
-  };
+
   return (
-    <Card onClick={onCardClick}>
+    <Card style={{ cursor: "pointer" }} onClick={onCardClick}>
       <Card.Body>
         <Card.Title>{movieData.Title}</Card.Title>
       </Card.Body>
