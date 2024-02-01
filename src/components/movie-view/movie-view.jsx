@@ -3,13 +3,13 @@ import React from "react";
 import './movie-view.scss';
 import { Button, Row, Col } from "react-bootstrap";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 
 //formats and renders MovieView when a MovieCard is clicked
-export const MovieView = ({ movies, user, onAddToFavorites }) => {
+export const MovieView = ({ movies, user, onAddToFavorites, onCloseModal }) => {
   const { _id } = useParams();
   const movie = movies.find((m) => m._id === _id);
+
   const handleAddToFavorites = () => {
     if (!user) {
       alert('Please log in to add movies to favorites.');
@@ -17,8 +17,6 @@ export const MovieView = ({ movies, user, onAddToFavorites }) => {
     }
     onAddToFavorites(user.Username, _id);
   };
-  //debug
-  // console.log('movieID', _id)
 
   //crash prevention
   if (!movie) {
@@ -50,9 +48,9 @@ export const MovieView = ({ movies, user, onAddToFavorites }) => {
             <span>{Array.isArray(movie.Director) ? movie.Director.join(", ") : movie.Director}</span>
           </div>
           <Button onClick={handleAddToFavorites}>Add this movie to my favorites</Button>
-          <Link to={`/`}>
-            <Button className="back-button" style={{ cursor: "pointer" }}>Back</Button>
-          </Link>
+          <Button onClick={onCloseModal} className="back-button" style={{ cursor: "pointer" }}>
+            Back
+          </Button>
         </div >
       </Col>
     </Row>

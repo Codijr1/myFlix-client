@@ -1,25 +1,38 @@
 //imports
-import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import { MovieModal } from "../movie-view/movie-modal";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { ProfileView } from "../profile-view/profile-view";
-import { Col, Row, Button } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  //debug
-  // console.log('Stored User:', storedUser);
-  // console.log('Stored Token:', storedToken);
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
+  //open modal
+  const handleOpenModal = (movie) => {
+    console.log('Selected Movie:', movie);
+    setSelectedMovie(movie);
+    setShowModal(true);
+  };
+
+  //close modal
+  const handleCloseModal = () => {
+    setSelectedMovie(null);
+    setShowModal(false);
+  };
 
   //renders the movie list if a user is logged in
   useEffect(() => {
@@ -145,6 +158,24 @@ export const MainView = () => {
               !user ? (
                 <Navigate to="/login" replace />
               ) : movies.length === 0 ? (
+                <Col>The list appears empty</Col>
+              ) : (
+                <>
+                  {movies.map((movie) => (
+                    <Col md={6} lg={4} xl={3} className="mb-5 col-8" key={movie._id}>
+                      <MovieCard movieData={movie} onCardClick={() => handleOpenModal(movie)} />
+                    </Col>
+                  ))}
+                </>
+              )
+            }
+          />
+          {/* <Route
+            path="/"
+            element={
+              !user ? (
+                <Navigate to="/login" replace />
+              ) : movies.length === 0 ? (
                 <Col>Loading...</Col>
               ) : (
                 <>
@@ -158,7 +189,7 @@ export const MainView = () => {
                 </>
               )
             }
-          />
+          /> */}
           <Route
             path="/users/profile"
             element={
@@ -180,6 +211,7 @@ export const MainView = () => {
           />
         </Routes>
       </Row>
+      <MovieModal show={showModal} handleClose={handleCloseModal} movieData={selectedMovie} />
     </BrowserRouter>
   );
 };
