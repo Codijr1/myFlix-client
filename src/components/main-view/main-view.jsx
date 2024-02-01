@@ -1,4 +1,5 @@
 //imports
+import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,7 +9,6 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { ProfileView } from "../profile-view/profile-view";
 import { Col, Row, Button } from "react-bootstrap";
-import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
 
 export const MainView = () => {
@@ -95,7 +95,16 @@ export const MainView = () => {
             path="/signup"
             element={
               <Col md={5}>
-                {user ? <Navigate to="/" /> : <SignupView />}
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <SignupView
+                    onLoggedIn={(user, token) => {
+                      setUser(user);
+                      setToken(token);
+                    }}
+                  />
+                )}
               </Col>
             }
           />
@@ -103,10 +112,16 @@ export const MainView = () => {
             path="/login"
             element={
               <Col md={5}>
-                {user ? <Navigate to="/" /> : <LoginView onLoggedIn={(user, token) => {
-                  setUser(user);
-                  setToken(token);
-                }} />}
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <LoginView
+                    onLoggedIn={(user, token) => {
+                      setUser(user);
+                      setToken(token);
+                    }}
+                  />
+                )}
               </Col>
             }
           />

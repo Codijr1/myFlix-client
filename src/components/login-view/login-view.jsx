@@ -10,9 +10,11 @@ export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("Username");
   const [password, setPassword] = useState("Password");
   const navigate = useNavigate();
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate('/signup');
+
     const data = {
       Username: username,
       Password: password,
@@ -35,6 +37,9 @@ export const LoginView = ({ onLoggedIn }) => {
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
           onLoggedIn(data.user, data.token);
+
+          // Redirect to the main application route
+          navigate('/');
         } else {
           toast.error("User Not Found");
         }

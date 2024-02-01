@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 //hooks
-export const SignupView = () => {
+export const SignupView = ({ onLoggedIn }) => {
   //hardcoded for testing
   const [username, setUsername] = useState("Username");
   const [password, setPassword] = useState("Password");
@@ -13,45 +13,84 @@ export const SignupView = () => {
   const [lastName, setLastName] = useState("Last");
   const [firstName, setFirstName] = useState("First");
   const navigate = useNavigate();
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {
       Username: username,
       Password: password,
       Email: email,
       LastName: lastName,
-      FirstName: firstName
+      FirstName: firstName,
     };
 
-    // sends POST request to API to create a new user
-    fetch("https://myflixproject-9c1001b14e61.herokuapp.com/signup", {
+    try {
+      // sends POST request to API to create a new user
+      const response = await fetch(
+        "https://myflixproject-9c1001b14e61.herokuapp.com/signup",
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const responseData = await response.text();
+      const jsonData = JSON.parse(responseData);
+
+      if (response.ok) {
+        // Signup successful
+        toast.success("Signup Successful", 3000);
+
+        // Log in the user
+        loginUser(username, password);
+      } else {
+        console.error("Server response error:", jsonData);
+        throw new Error(jsonData.error || "Signup failed");
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      toast.error(
+        "Signup failed. User already exists or input form is invalid",
+        3000
+      );
+    }
+  };
+
+  const loginUser = (username, password) => {
+    fetch("https://myflixproject-9c1001b14e61.herokuapp.com/login", {
       method: "POST",
-      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        Username: username,
+        Password: password,
+      }),
     })
-      .then(async (response) => {
-        const responseData = await response.text();
-        try {
-          const jsonData = JSON.parse(responseData);
-          if (response.ok) {
-            toast.success("Signup Successful", 3000);
-            navigate('/');
-            console.log('Redirect failed')
-          } else {
-            console.error('Server response error:', jsonData);
-            throw new Error(jsonData.error || 'Signup failed');
-          }
-        } catch (error) {
-          console.error("Error during signup:", error);
-          toast.error(`Signup failed, User already exists or input form is invalid`, 3000);
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.user && data.token) {
+          // Call the onLoggedIn prop to notify MainView about the successful login
+          onLoggedIn(data.user, data.token);
+        } else {
+          toast.error("User Not Found");
         }
       })
       .catch((error) => {
-        console.error("Error during signup:", error);
-        toast.error(`Signup failed. Signup failed, User already exists or input form is invalid`, 3000);
+        console.error("Error during login:", error);
+
+        if (
+          error instanceof TypeError &&
+          error.message === "Failed to fetch"
+        ) {
+          alert("Failed to connect to the server. Please try again later.");
+        } else {
+          toast.error(
+            "Login failed. Please check your credentials and try again."
+          );
+        }
       });
   };
 
