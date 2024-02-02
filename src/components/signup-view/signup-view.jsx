@@ -7,11 +7,11 @@ import { useNavigate } from "react-router-dom";
 //hooks
 export const SignupView = ({ onLoggedIn }) => {
   //hardcoded for testing
-  const [username, setUsername] = useState("Username");
-  const [password, setPassword] = useState("Password");
-  const [email, setEmail] = useState("email@gmail.com");
-  const [lastName, setLastName] = useState("Last");
-  const [firstName, setFirstName] = useState("First");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();

@@ -7,8 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 // LoginView component
 export const LoginView = ({ onLoggedIn }) => {
-  const [username, setUsername] = useState("Username");
-  const [password, setPassword] = useState("Password");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
