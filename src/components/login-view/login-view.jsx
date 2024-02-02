@@ -11,7 +11,6 @@ export const LoginView = ({ onLoggedIn }) => {
   const [password, setPassword] = useState("Password");
   const navigate = useNavigate();
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
