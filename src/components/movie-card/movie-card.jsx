@@ -1,12 +1,13 @@
 //imports
 import PropTypes from 'prop-types';
-import {Card} from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import './movie-card.scss';
 
-//creates the MovieCard components
-export const MovieCard = ({ movieData, onMovieClick }) => {
+//renders the MovieCard component
+export const MovieCard = ({ movieData, onCardClick }) => {
+
   return (
-    <Card style={{cursor: "pointer" }} className='h100' onClick={() => onMovieClick(movieData)}>
+    <Card style={{ cursor: "pointer" }} onClick={onCardClick}>
       <Card.Body>
         <Card.Title>{movieData.Title}</Card.Title>
       </Card.Body>
@@ -24,8 +25,10 @@ MovieCard.propTypes = {
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string),
     ]).isRequired,
-    Director: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired,
+    Director: PropTypes.oneOfType([
+      PropTypes.string.isRequired,
+      PropTypes.arrayOf(PropTypes.string.isRequired)
+    ]).isRequired,
   }).isRequired,
-  onMovieClick: PropTypes.func.isRequired,
+  onCardClick: PropTypes.func.isRequired,
 };
