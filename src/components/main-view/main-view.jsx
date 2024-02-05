@@ -1,6 +1,7 @@
 //imports
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Col, Row, FormControl } from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MovieCard } from "../movie-card/movie-card";
@@ -10,8 +11,8 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { ProfileView } from "../profile-view/profile-view";
 import { AnnouncementBanner } from "./announcementBanner";
-import { Col, Row } from "react-bootstrap";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
+import './main-view.scss';
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -21,6 +22,8 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredMovies, setFilteredMovies] = useState([]);
 
   //open modal
   const handleOpenModal = (movie) => {
@@ -39,17 +42,12 @@ export const MainView = () => {
     if (!token) {
       return;
     }
+
     fetch("https://myflixproject-9c1001b14e61.herokuapp.com/movies", {
       headers: { Authorization: `Bearer ${token}` }
     })
-      .then((response) => {
-        //debug
-        // console.log('API Response:', response);
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        //debug
-        // console.log('Data from API:', data);
         const moviesFromApi = data.map((movie) => ({
           Title: movie.title,
           Year: movie.year,
@@ -58,12 +56,17 @@ export const MainView = () => {
           Director: movie.director,
           _id: movie._id,
         }));
+        //filtering movie cards
+        const filtered = moviesFromApi.filter((movie) =>
+          movie.Title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
         setMovies(moviesFromApi);
+        setFilteredMovies(filtered);
       })
       .catch((error) => {
         console.error('Error importing data', error);
       });
-  }, [token]);
+  }, [token, searchQuery]);
 
   //adding favorites
   const handleAddToFavorites = async (username, movieId) => {
@@ -161,11 +164,26 @@ export const MainView = () => {
                 <Col>Loading...</Col>
               ) : (
                 <>
-                  {movies.map((movie) => (
-                    <Col sm={12} lg={4} xl={3} className="mb-5 col-12 col-md-6 col-lg-4 col-xl-3" key={movie._id}>
-                      <MovieCard movieData={movie} onCardClick={() => handleOpenModal(movie)} />
-                    </Col>
-                  ))}
+                  <FormControl
+                    type="text"
+                    placeholder="Search films by title"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    style={{ margin: '10px 0' }}
+                  />
+                  {searchQuery ? (
+                    filteredMovies.map((movie) => (
+                      <Col sm={12} lg={4} xl={3} className="mb-5 col-12 col-md-6 col-lg-4 col-xl-3" key={movie._id}>
+                        <MovieCard movieData={movie} onCardClick={() => handleOpenModal(movie)} />
+                      </Col>
+                    ))
+                  ) : (
+                    movies.map((movie) => (
+                      <Col sm={12} lg={4} xl={3} className="mb-5 col-12 col-md-6 col-lg-4 col-xl-3" key={movie._id}>
+                        <MovieCard movieData={movie} onCardClick={() => handleOpenModal(movie)} />
+                      </Col>
+                    ))
+                  )}
                 </>
               )
             }

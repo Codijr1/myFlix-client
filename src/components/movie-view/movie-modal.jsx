@@ -9,8 +9,8 @@ export const MovieModal = ({ show, handleClose, movieData, onAddToFavorites, use
     }
     return (
         <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>{movieData.Title}</Modal.Title>
+            <Modal.Header>
+                <Modal.Title className="mx-auto">{movieData.Title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <p>Release Year: {movieData.Year}</p>
