@@ -18,7 +18,6 @@ Before you can run the myFlix locally, you'll need to have the latest version of
 #### Installation
 Simply clone the repository to your destination of choice, then navigate to the folder using your terminal of choice. Run npm start and you'll find myFlix at http://localhost:1234 in your web browser.
 
-License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 Thank you for checking out my app!
