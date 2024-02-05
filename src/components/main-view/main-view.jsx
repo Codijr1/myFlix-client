@@ -107,7 +107,7 @@ export const MainView = () => {
           <Route
             path="/signup"
             element={
-              <Col md={5}>
+              <Col sm={12} md={5}>
                 {user ? (
                   <Navigate to="/" />
                 ) : (
@@ -124,7 +124,7 @@ export const MainView = () => {
           <Route
             path="/login"
             element={
-              <Col md={5}>
+              <Col sm={12} md={5}>
                 {user ? (
                   <Navigate to="/" />
                 ) : (
@@ -146,7 +146,7 @@ export const MainView = () => {
               ) : movies.length === 0 ? (
                 <Col>Loading...</Col>
               ) : (
-                <Col md={8}>
+                <Col sm={12} md={8}>
                   <MovieView movies={movies} user={user} onAddToFavorites={handleAddToFavorites} />
                 </Col>
               )
@@ -162,7 +162,7 @@ export const MainView = () => {
               ) : (
                 <>
                   {movies.map((movie) => (
-                    <Col md={6} lg={4} xl={3} className="mb-5 col-8" key={movie._id}>
+                    <Col sm={12} md={6} lg={4} xl={3} className="mb-5 col-12 col-md-6 col-lg-4 col-xl-3" key={movie._id}>
                       <MovieCard movieData={movie} onCardClick={() => handleOpenModal(movie)} />
                     </Col>
                   ))}
@@ -197,6 +197,7 @@ export const MainView = () => {
         movieData={selectedMovie}
         onAddToFavorites={handleAddToFavorites}
         user={user}
+        size="xl"
       />
       <AnnouncementBanner></AnnouncementBanner>
     </BrowserRouter>
