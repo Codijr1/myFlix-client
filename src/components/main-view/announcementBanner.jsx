@@ -15,7 +15,6 @@ export const AnnouncementBanner = () => {
                 <Alert variant="info" className="fixed-bottom mb-0 text-center">
                     Upcoming Features:
                     -Movie posters for every movie
-                    -Sorting features for the list
                     -General visual updates
                     -Bug fixes.
                     Thank you for checking out the app!
