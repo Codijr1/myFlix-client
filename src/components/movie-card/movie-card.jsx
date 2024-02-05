@@ -7,7 +7,7 @@ import './movie-card.scss';
 export const MovieCard = ({ movieData, onCardClick }) => {
 
   return (
-    <Card style={{ cursor: "pointer" }} onClick={onCardClick}>
+    <Card className="text-center" style={{ cursor: "pointer" }} onClick={onCardClick}>
       <Card.Body>
         <Card.Title>{movieData.Title}</Card.Title>
       </Card.Body>

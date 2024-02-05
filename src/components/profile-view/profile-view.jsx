@@ -159,11 +159,11 @@ export const ProfileView = ({ user, token, movies, onLoggedOut }) => {
                             Are you sure you want to delete your account? This action cannot be undone.
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={handleCloseDeleteConfirmationModal}>
-                                Cancel
-                            </Button>
                             <Button variant="danger" onClick={handleDeleteUser}>
                                 Confirm
+                            </Button>
+                            <Button variant="secondary" onClick={handleCloseDeleteConfirmationModal}>
+                                Cancel
                             </Button>
                         </Modal.Footer>
                     </Modal>

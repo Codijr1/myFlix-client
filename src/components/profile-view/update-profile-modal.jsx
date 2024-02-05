@@ -17,7 +17,7 @@ export const UpdateProfileForm = ({ show, onUpdateProfile, handleClose, newFirst
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Update Info</Modal.Title>
+                <Modal.Title>All Fields Required</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
@@ -69,11 +69,11 @@ export const UpdateProfileForm = ({ show, onUpdateProfile, handleClose, newFirst
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
                 <Button variant="primary" onClick={handleUpdate}>
                     Submit Updates
+                </Button>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
                 </Button>
             </Modal.Footer>
         </Modal>
