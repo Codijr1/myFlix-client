@@ -107,7 +107,7 @@ export const MainView = () => {
           <Route
             path="/signup"
             element={
-              <Col sm={12} md={5}>
+              <Col sm={12} md={10} lg={8}>
                 {user ? (
                   <Navigate to="/" />
                 ) : (
@@ -124,7 +124,7 @@ export const MainView = () => {
           <Route
             path="/login"
             element={
-              <Col sm={12} md={5}>
+              <Col sm={12} md={10} lg={8}>
                 {user ? (
                   <Navigate to="/" />
                 ) : (
@@ -162,7 +162,7 @@ export const MainView = () => {
               ) : (
                 <>
                   {movies.map((movie) => (
-                    <Col sm={12} md={6} lg={4} xl={3} className="mb-5 col-12 col-md-6 col-lg-4 col-xl-3" key={movie._id}>
+                    <Col sm={12} lg={4} xl={3} className="mb-5 col-12 col-md-6 col-lg-4 col-xl-3" key={movie._id}>
                       <MovieCard movieData={movie} onCardClick={() => handleOpenModal(movie)} />
                     </Col>
                   ))}
