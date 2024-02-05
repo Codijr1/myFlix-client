@@ -27437,6 +27437,7 @@ const MainView = ()=>{
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
                             path: "/signup",
                             element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                                sm: 12,
                                 md: 5,
                                 children: user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
                                     to: "/"
@@ -27467,6 +27468,7 @@ const MainView = ()=>{
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
                             path: "/login",
                             element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                                sm: 12,
                                 md: 5,
                                 children: user ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Navigate), {
                                     to: "/"
@@ -27510,6 +27512,7 @@ const MainView = ()=>{
                                 lineNumber: 147,
                                 columnNumber: 17
                             }, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                                sm: 12,
                                 md: 8,
                                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
                                     movies: movies,
@@ -27547,10 +27550,11 @@ const MainView = ()=>{
                                 columnNumber: 17
                             }, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
                                 children: movies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Col), {
+                                        sm: 12,
                                         md: 6,
                                         lg: 4,
                                         xl: 3,
-                                        className: "mb-5 col-8",
+                                        className: "mb-5 col-12 col-md-6 col-lg-4 col-xl-3",
                                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
                                             movieData: movie,
                                             onCardClick: ()=>handleOpenModal(movie)
@@ -27613,7 +27617,8 @@ const MainView = ()=>{
                 handleClose: handleCloseModal,
                 movieData: selectedMovie,
                 onAddToFavorites: handleAddToFavorites,
-                user: user
+                user: user,
+                size: "xl"
             }, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
                 lineNumber: 194,
@@ -27621,7 +27626,7 @@ const MainView = ()=>{
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _announcementBanner.AnnouncementBanner), {}, void 0, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 201,
+                lineNumber: 202,
                 columnNumber: 7
             }, undefined)
         ]
