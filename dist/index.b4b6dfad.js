@@ -43906,7 +43906,7 @@ const AnnouncementBanner = ()=>{
             variant: "info",
             className: "fixed-bottom mb-0 text-center",
             children: [
-                "Upcoming Features: -Movie posters for every movie -Sorting features for the list -General visual updates -Bug fixes. Thank you for checking out the app!",
+                "Upcoming Features: -Movie posters for every movie -General visual updates -Bug fixes. Thank you for checking out the app!",
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
                     type: "button",
                     className: "close",
@@ -43914,7 +43914,7 @@ const AnnouncementBanner = ()=>{
                     children: "Close"
                 }, void 0, false, {
                     fileName: "src/components/main-view/announcementBanner.jsx",
-                    lineNumber: 22,
+                    lineNumber: 21,
                     columnNumber: 21
                 }, undefined)
             ]
