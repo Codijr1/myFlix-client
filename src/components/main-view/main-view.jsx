@@ -228,7 +228,7 @@ export const MainView = () => {
         movieData={selectedMovie}
         onAddToFavorites={handleAddToFavorites}
         user={user}
-        size="xl"
+        size='xl'
       />
       <AnnouncementBanner></AnnouncementBanner>
     </BrowserRouter>
