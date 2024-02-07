@@ -54,6 +54,8 @@ export const MainView = () => {
           Description: movie.description,
           Genre: movie.genre,
           Director: movie.director,
+          Trailer: movie.trailer,
+          Poster: movie.poster,
           _id: movie._id,
         }));
         //filtering movie cards
