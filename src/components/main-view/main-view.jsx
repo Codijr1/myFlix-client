@@ -1,7 +1,7 @@
 //imports
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Col, Row, FormControl } from "react-bootstrap";
+import { Col, Row, FormControl, Button } from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { MovieCard } from "../movie-card/movie-card";
@@ -164,13 +164,24 @@ export const MainView = () => {
                 <Col>Loading...</Col>
               ) : (
                 <>
-                  <FormControl
-                    type="text"
-                    placeholder="Search films by title"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{ margin: '10px 0' }}
-                  />
+                  <div style={{ position: 'relative', display: 'inline-block' }}>
+                    <FormControl
+                      type="text"
+                      placeholder="Search films by title"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      style={{ margin: '10px 0', paddingRight: '35px' }}
+                    />
+                    {searchQuery && (
+                      <Button
+                        variant="outline-secondary"
+                        onClick={() => setSearchQuery('')}
+                        style={{ position: 'absolute', right: '20px', top: '50%', transform: 'translateY(-50%)', padding: '2px 8px' }}
+                      >
+                        Clear
+                      </Button>
+                    )}
+                  </div>
                   {searchQuery ? (
                     filteredMovies.map((movie) => (
                       <Col sm={12} lg={4} xl={3} className="mb-5 col-12 col-md-6 col-lg-4 col-xl-3" key={movie._id}>
