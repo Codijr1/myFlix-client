@@ -4,7 +4,6 @@ import { Modal, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 export const MovieModal = ({ show, handleClose, movieData, onAddToFavorites, user }) => {
-    console.log('movieData:', movieData);
     if (!movieData) {
         return null;
     }
