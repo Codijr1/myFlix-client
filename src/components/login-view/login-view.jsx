@@ -1,11 +1,9 @@
-// imports
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// LoginView component
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -19,7 +17,6 @@ export const LoginView = ({ onLoggedIn }) => {
       Password: password,
     };
 
-    // sends a POST request to API to log in using existing user data
     fetch("https://myflixproject-9c1001b14e61.herokuapp.com/login", {
       method: "POST",
       headers: {
@@ -29,15 +26,10 @@ export const LoginView = ({ onLoggedIn }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        //debug
-        // console.log("Login response: ", data);
         if (data.user && data.token) {
-          // Store user and token in local storage
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("token", data.token);
           onLoggedIn(data.user, data.token);
-
-          // Redirect to the main application route
           navigate('/');
         } else {
           toast.error("User Not Found");
@@ -61,9 +53,17 @@ export const LoginView = ({ onLoggedIn }) => {
       });
   };
 
-  // renders LoginView component
+  const handleDemoLogin = () => {
+    setUsername("Username");
+    setPassword("Password");
+
+    setTimeout(() => {
+      document.getElementById("login-form").requestSubmit();
+    }, 0);
+  };
+
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form id="login-form" onSubmit={handleSubmit}>
       <Form.Group>
         <Form.Label>Username:</Form.Label>
         <Form.Control
@@ -83,12 +83,17 @@ export const LoginView = ({ onLoggedIn }) => {
           required
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Login
-      </Button>
-      <Button variant="secondary" onClick={() => navigate('/signup')}>
-        Sign Up
-      </Button>
+      <div className="button-group">
+        <Button variant="primary" type="submit">
+          Login
+        </Button>
+        <Button variant="secondary" onClick={() => navigate('/signup')}>
+          Sign Up
+        </Button>
+        <Button variant="success" onClick={handleDemoLogin}>
+          Demo Login
+        </Button>
+      </div>
     </Form>
   );
 };

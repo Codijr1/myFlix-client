@@ -35296,7 +35296,6 @@ var prevRefreshSig = window.$RefreshSig$;
 $parcel$ReactRefreshHelpers$9fee.prelude(module);
 
 try {
-// imports
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "LoginView", ()=>LoginView);
@@ -35319,7 +35318,6 @@ const LoginView = ({ onLoggedIn })=>{
             Username: username,
             Password: password
         };
-        // sends a POST request to API to log in using existing user data
         fetch("https://myflixproject-9c1001b14e61.herokuapp.com/login", {
             method: "POST",
             headers: {
@@ -35327,14 +35325,10 @@ const LoginView = ({ onLoggedIn })=>{
             },
             body: JSON.stringify(data)
         }).then((response)=>response.json()).then((data)=>{
-            //debug
-            // console.log("Login response: ", data);
             if (data.user && data.token) {
-                // Store user and token in local storage
                 localStorage.setItem("user", JSON.stringify(data.user));
                 localStorage.setItem("token", data.token);
                 onLoggedIn(data.user, data.token);
-                // Redirect to the main application route
                 navigate("/");
             } else (0, _reactToastify.toast).error("User Not Found");
         }).catch((error)=>{
@@ -35343,8 +35337,15 @@ const LoginView = ({ onLoggedIn })=>{
             else (0, _reactToastify.toast).error("Login failed. Please check your credentials and try again.");
         });
     };
-    // renders LoginView component
+    const handleDemoLogin = ()=>{
+        setUsername("Username");
+        setPassword("Password");
+        setTimeout(()=>{
+            document.getElementById("login-form").requestSubmit();
+        }, 0);
+    };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form), {
+        id: "login-form",
         onSubmit: handleSubmit,
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -35397,22 +35398,40 @@ const LoginView = ({ onLoggedIn })=>{
                 lineNumber: 77,
                 columnNumber: 7
             }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
-                variant: "primary",
-                type: "submit",
-                children: "Login"
-            }, void 0, false, {
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "button-group",
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                        variant: "primary",
+                        type: "submit",
+                        children: "Login"
+                    }, void 0, false, {
+                        fileName: "src/components/login-view/login-view.jsx",
+                        lineNumber: 87,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                        variant: "secondary",
+                        onClick: ()=>navigate("/signup"),
+                        children: "Sign Up"
+                    }, void 0, false, {
+                        fileName: "src/components/login-view/login-view.jsx",
+                        lineNumber: 90,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
+                        variant: "success",
+                        onClick: handleDemoLogin,
+                        children: "Demo Login"
+                    }, void 0, false, {
+                        fileName: "src/components/login-view/login-view.jsx",
+                        lineNumber: 93,
+                        columnNumber: 9
+                    }, undefined)
+                ]
+            }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
                 lineNumber: 86,
-                columnNumber: 7
-            }, undefined),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
-                variant: "secondary",
-                onClick: ()=>navigate("/signup"),
-                children: "Sign Up"
-            }, void 0, false, {
-                fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 89,
                 columnNumber: 7
             }, undefined)
         ]

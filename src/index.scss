@@ -2,3 +2,7 @@
 @import '~bootstrap/scss/bootstrap.scss';
 $primary: rgb(44, 157, 202);
 $body-bg: rgb(255, 255, 255);
+
+button {
+    padding: 5px;
+}
