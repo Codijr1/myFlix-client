@@ -1,5 +1,5 @@
 # myFlix App Project
-myFlix is a web application built using React that allows users to discover, browse, and interact with a brief catalog of criticallu acclaimed movies. This README provides an overview of the Movie App project, its features, and instructions for getting started.
+myFlix is a web application built using React that allows users to discover, browse, and interact with a brief catalog of critically acclaimed movies. This README provides an overview of the Movie App project, its features, and instructions for getting started.
 
 ## Introduction
 This myFlix project was designed and developed prioritizing a smooth and simple user experience to provide a beginner friendly and engaging interaction for movie enthusiasts. Once logged in, it offers a range of features for users to explore and interact with movies, including movie browsing, searching, and favorites management.
